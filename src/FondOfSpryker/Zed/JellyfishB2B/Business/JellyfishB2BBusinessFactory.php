@@ -2,7 +2,8 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Business;
 
-use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\AdapterInterface;
+use FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface;
+use FondOfSpryker\Zed\Jellyfish\Dependency\Service\JellyfishToUtilEncodingServiceInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyUserAdapter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressChecker;
@@ -31,7 +32,6 @@ use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAd
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Dependency\Service\JellyfishB2BToUtilEncodingServiceInterface;
 use FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BDependencyProvider;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
@@ -197,25 +197,29 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\AdapterInterface
+     * @return \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface
      */
     protected function createCompanyBusinessUnitAdapter(): AdapterInterface
     {
         return new CompanyBusinessUnitAdapter(
             $this->getUtilEncodingService(),
             $this->createHttpClient(),
+            $this->getConfig()->getUsername(),
+            $this->getConfig()->getPassword(),
             $this->getConfig()->dryRun()
         );
     }
 
     /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\AdapterInterface
+     * @return \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface
      */
     protected function createCompanyUserAdapter(): AdapterInterface
     {
         return new CompanyUserAdapter(
             $this->getUtilEncodingService(),
             $this->createHttpClient(),
+            $this->getConfig()->getUsername(),
+            $this->getConfig()->getPassword(),
             $this->getConfig()->dryRun()
         );
     }
@@ -234,9 +238,9 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     /**
      * @throws
      *
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Service\JellyfishB2BToUtilEncodingServiceInterface
+     * @return \FondOfSpryker\Zed\Jellyfish\Dependency\Service\JellyfishToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService(): JellyfishB2BToUtilEncodingServiceInterface
+    protected function getUtilEncodingService(): JellyfishToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(JellyfishB2BDependencyProvider::UTIL_ENCODING_SERVICE);
     }

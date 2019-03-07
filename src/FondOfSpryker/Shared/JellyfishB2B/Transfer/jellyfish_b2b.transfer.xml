@@ -51,11 +51,14 @@
         <property name="phone" type="string"/>
     </transfer>
 
-
     <transfer name="JellyfishCompanyUser">
         <property name="externalReference" type="string"/>
         <property name="customer" type="JellyfishCustomer"/>
         <property name="companyBusinessUnit" type="JellyfishCompanyBusinessUnit"/>
         <property name="active" type="bool"/>
+    </transfer>
+
+    <transfer name="JellyfishOrderItem">
+        <property name="deliveryDate" type="string"/>
     </transfer>
 </transfers>

@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter;
 
+use FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AbstractAdapter;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 

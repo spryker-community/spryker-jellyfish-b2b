@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter;
 
-use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\AdapterInterface;
+use FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface;
 use Generated\Shared\Transfer\CompanyTransfer;
@@ -31,7 +31,7 @@ class CompanyExporter implements ExporterInterface
     protected $jellyfishCompanyBusinessUnitExpanderPlugins;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\AdapterInterface
+     * @var \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface
      */
     protected $adapter;
 
@@ -39,7 +39,7 @@ class CompanyExporter implements ExporterInterface
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface $companyFacade
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface[] $jellyfishCompanyBusinessUnitExpanderPlugins
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\AdapterInterface $adapter
+     * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
      */
     public function __construct(
         JellyfishB2BToCompanyFacadeInterface $companyFacade,

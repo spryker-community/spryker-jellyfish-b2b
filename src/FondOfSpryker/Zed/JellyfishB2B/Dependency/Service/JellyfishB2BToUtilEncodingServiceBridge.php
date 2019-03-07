@@ -2,7 +2,9 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Dependency\Service;
 
-class JellyfishB2BToUtilEncodingServiceBridge implements JellyfishB2BToUtilEncodingServiceInterface
+use FondOfSpryker\Zed\Jellyfish\Dependency\Service\JellyfishToUtilEncodingServiceInterface;
+
+class JellyfishB2BToUtilEncodingServiceBridge implements JellyfishToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
