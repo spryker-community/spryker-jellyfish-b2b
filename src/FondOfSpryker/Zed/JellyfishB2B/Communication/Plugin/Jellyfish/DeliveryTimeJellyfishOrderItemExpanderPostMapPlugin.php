@@ -30,7 +30,7 @@ class DeliveryTimeJellyfishOrderItemExpanderPostMapPlugin extends AbstractPlugin
     ): JellyfishOrderItemTransfer {
         $deliveryTime = $salesOrderItem->getDeliveryTime();
 
-        $jellyfishOrderItemTransfer->setDeliveryDate($deliveryTime->format('Y-m-d H:i:s'));
+        $jellyfishOrderItemTransfer->setDeliveryDate($deliveryTime->format('Y-m-d'));
 
         return $jellyfishOrderItemTransfer;
     }
