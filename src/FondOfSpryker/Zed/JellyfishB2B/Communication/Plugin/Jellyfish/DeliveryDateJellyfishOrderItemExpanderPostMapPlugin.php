@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
  */
-class DeliveryTimeJellyfishOrderItemExpanderPostMapPlugin extends AbstractPlugin implements JellyfishOrderItemExpanderPostMapPluginInterface
+class DeliveryDateJellyfishOrderItemExpanderPostMapPlugin extends AbstractPlugin implements JellyfishOrderItemExpanderPostMapPluginInterface
 {
     /**
      * Specification:
@@ -28,9 +28,9 @@ class DeliveryTimeJellyfishOrderItemExpanderPostMapPlugin extends AbstractPlugin
         JellyfishOrderItemTransfer $jellyfishOrderItemTransfer,
         SpySalesOrderItem $salesOrderItem
     ): JellyfishOrderItemTransfer {
-        $deliveryTime = $salesOrderItem->getDeliveryTime();
+        $deliveryDate = $salesOrderItem->getDeliveryDate();
 
-        $jellyfishOrderItemTransfer->setDeliveryDate($deliveryTime->format('Y-m-d'));
+        $jellyfishOrderItemTransfer->setDeliveryDate($deliveryDate->format('Y-m-d'));
 
         return $jellyfishOrderItemTransfer;
     }
