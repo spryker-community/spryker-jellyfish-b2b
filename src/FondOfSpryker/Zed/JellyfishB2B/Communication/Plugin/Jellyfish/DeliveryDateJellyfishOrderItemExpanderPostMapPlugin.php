@@ -22,6 +22,8 @@ class DeliveryDateJellyfishOrderItemExpanderPostMapPlugin extends AbstractPlugin
      * @param \Generated\Shared\Transfer\JellyfishOrderItemTransfer $jellyfishOrderItemTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
+     * @throws
+     *
      * @return \Generated\Shared\Transfer\JellyfishOrderItemTransfer
      */
     public function expand(
