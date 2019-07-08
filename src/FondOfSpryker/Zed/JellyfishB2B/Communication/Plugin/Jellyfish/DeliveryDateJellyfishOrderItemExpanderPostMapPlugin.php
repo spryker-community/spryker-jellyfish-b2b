@@ -30,9 +30,9 @@ class DeliveryDateJellyfishOrderItemExpanderPostMapPlugin extends AbstractPlugin
         JellyfishOrderItemTransfer $jellyfishOrderItemTransfer,
         SpySalesOrderItem $salesOrderItem
     ): JellyfishOrderItemTransfer {
-        $deliveryDate = $salesOrderItem->getDeliveryDate();
+        $deliveryDate = $salesOrderItem->getConcreteDeliveryDate();
 
-        $jellyfishOrderItemTransfer->setDeliveryDate($deliveryDate->format('Y-m-d'));
+        $jellyfishOrderItemTransfer->setDeliveryDate($deliveryDate);
 
         return $jellyfishOrderItemTransfer;
     }
