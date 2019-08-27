@@ -18,6 +18,16 @@
         <property name="uuid" type="string"/>
         <property name="externalReference" type="string"/>
         <property name="name" type="string"/>
+        <property name="debtorNumber" type="string"/>
+        <property name="status" type="string"/>
+        <property name="blockedFor" type="string"/>
+        <property name="isActive" type="string"/>
+        <property name="priceList" type="JellyfishPriceList"/>
+    </transfer>
+
+    <transfer name="JellyfishPriceList">
+        <property name="idPriceList" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="JellyfishCompanyUnitAddress">
