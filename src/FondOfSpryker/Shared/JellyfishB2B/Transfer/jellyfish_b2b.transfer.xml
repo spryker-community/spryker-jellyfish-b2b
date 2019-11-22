@@ -71,4 +71,10 @@
     <transfer name="JellyfishOrderItem">
         <property name="deliveryDate" type="string"/>
     </transfer>
+
+    <transfer name="JellyfishOrder">
+        <property name="companyId" type="int"/>
+        <property name="companyUuid" type="string"/>
+        <property name="companyUserReference" type="string"/>
+    </transfer>
 </transfers>
