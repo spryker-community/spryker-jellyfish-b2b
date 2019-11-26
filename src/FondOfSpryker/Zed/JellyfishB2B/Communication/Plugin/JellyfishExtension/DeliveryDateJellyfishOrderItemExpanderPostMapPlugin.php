@@ -1,8 +1,8 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\Jellyfish;
+namespace FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishExtension;
 
-use FondOfSpryker\Zed\Jellyfish\Dependency\Plugin\JellyfishOrderItemExpanderPostMapPluginInterface;
+use FondOfSpryker\Zed\JellyfishExtension\Dependency\Plugin\JellyfishOrderItemExpanderPostMapPluginInterface;
 use Generated\Shared\Transfer\JellyfishOrderItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
