@@ -51,7 +51,8 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyFacade(),
             $this->createCompanyBusinessUnitMapper(),
             $this->createCompanyExporterExpanderPlugins(),
-            $this->createCompanyBusinessUnitAdapter()
+            $this->createCompanyBusinessUnitAdapter(),
+            $this->getExportValidatorPlugins()
         );
     }
 
@@ -63,7 +64,8 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
         return new CompanyUserExporter(
             $this->getCompanyUserFacade(),
             $this->createCompanyUserMapper(),
-            $this->createCompanyUserAdapter()
+            $this->createCompanyUserAdapter(),
+            $this->getExportValidatorPlugins()
         );
     }
 
@@ -88,7 +90,8 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyBusinessUnitFacade(),
             $this->createCompanyBusinessUnitMapper(),
             $this->createCompanyExporterExpanderPlugins(),
-            $this->createCompanyBusinessUnitAdapter()
+            $this->createCompanyBusinessUnitAdapter(),
+            $this->getExportValidatorPlugins()
         );
     }
 
@@ -101,7 +104,8 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyUnitAddressFacade(),
             $this->createCompanyBusinessUnitMapper(),
             $this->createCompanyExporterExpanderPlugins(),
-            $this->createCompanyBusinessUnitAdapter()
+            $this->createCompanyBusinessUnitAdapter(),
+            $this->getExportValidatorPlugins()
         );
     }
 
@@ -293,5 +297,15 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyUserFacade(): JellyfishB2BToCompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(JellyfishB2BDependencyProvider::COMPANY_USER_FACADE);
+    }
+
+    /**
+     * @return array
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    protected function getExportValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::EXPORT_VALIDATOR_PLUGINS);
     }
 }

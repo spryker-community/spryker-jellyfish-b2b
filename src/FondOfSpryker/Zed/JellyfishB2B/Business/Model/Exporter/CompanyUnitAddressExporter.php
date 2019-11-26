@@ -36,6 +36,11 @@ class CompanyUnitAddressExporter implements ExporterInterface
     protected $adapter;
 
     /**
+     * @var array
+     */
+    protected $validatorPlugins;
+
+    /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface[] $jellyfishCompanyBusinessUnitExpanderPlugins
@@ -45,12 +50,14 @@ class CompanyUnitAddressExporter implements ExporterInterface
         JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade,
         JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper,
         array $jellyfishCompanyBusinessUnitExpanderPlugins,
-        AdapterInterface $adapter
+        AdapterInterface $adapter,
+        array $validatorPlugins
     ) {
         $this->jellyfishCompanyBusinessUnitExpanderPlugins = $jellyfishCompanyBusinessUnitExpanderPlugins;
         $this->companyUnitAddressFacade = $companyUnitAddressFacade;
         $this->jellyfishCompanyBusinessUnitMapper = $jellyfishCompanyBusinessUnitMapper;
         $this->adapter = $adapter;
+        $this->validatorPlugins = $validatorPlugins;
     }
 
     /**
@@ -76,9 +83,13 @@ class CompanyUnitAddressExporter implements ExporterInterface
      */
     protected function canExport(TransferInterface $transfer): bool
     {
-        return $transfer instanceof EventEntityTransfer &&
-            count($transfer->getModifiedColumns()) > 0 &&
-            $transfer->getName() === 'spy_company_unit_address';
+        if ($transfer instanceof EventEntityTransfer === null ||
+            count($transfer->getModifiedColumns()) === 0 ||
+            $transfer->getName() !== 'spy_company_unit_address') {
+            return false;
+        }
+
+        return $this->doValidateExport($transfer);
     }
 
     /**
@@ -128,5 +139,21 @@ class CompanyUnitAddressExporter implements ExporterInterface
         $jellyfishCompanyBusinessUnitTransfer = $this->expand($jellyfishCompanyBusinessUnitTransfer);
 
         $this->adapter->sendRequest($jellyfishCompanyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $transfer
+     *
+     * @return bool
+     */
+    protected function doValidateExport(EventEntityTransfer $transfer): bool
+    {
+        foreach ($this->validatorPlugins as $validatorPlugin) {
+            if ($validatorPlugin->validate($transfer) === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
