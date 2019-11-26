@@ -89,6 +89,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
             return false;
         }
 
+        throw new \Exception($this->doValidateExport($transfer));
         return $this->doValidateExport($transfer);
     }
 
