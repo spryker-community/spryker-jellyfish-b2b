@@ -36,6 +36,11 @@ class CompanyExporter implements ExporterInterface
     protected $adapter;
 
     /**
+     * @var array
+     */
+    protected $validatorPlugins;
+
+    /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface $companyFacade
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface[] $jellyfishCompanyBusinessUnitExpanderPlugins
@@ -45,12 +50,14 @@ class CompanyExporter implements ExporterInterface
         JellyfishB2BToCompanyFacadeInterface $companyFacade,
         JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper,
         array $jellyfishCompanyBusinessUnitExpanderPlugins,
-        AdapterInterface $adapter
+        AdapterInterface $adapter,
+        array $validatorPlugins
     ) {
         $this->companyFacade = $companyFacade;
         $this->jellyfishCompanyBusinessUnitMapper = $jellyfishCompanyBusinessUnitMapper;
         $this->jellyfishCompanyBusinessUnitExpanderPlugins = $jellyfishCompanyBusinessUnitExpanderPlugins;
         $this->adapter = $adapter;
+        $this->validatorPlugins = $validatorPlugins;
     }
 
     /**
@@ -102,9 +109,14 @@ class CompanyExporter implements ExporterInterface
      */
     protected function canExport(TransferInterface $transfer): bool
     {
-        return $transfer instanceof EventEntityTransfer &&
-            count($transfer->getModifiedColumns()) > 0 &&
-            $transfer->getName() === 'spy_company';
+        if ($transfer instanceof EventEntityTransfer === false ||
+            count($transfer->getModifiedColumns()) === 0 &&
+            $transfer->getName() !== 'spy_company')
+        {
+            return false;
+        }
+
+        return $this->doValidateExport($transfer);
     }
 
     /**
@@ -127,5 +139,21 @@ class CompanyExporter implements ExporterInterface
         $jellyfishCompanyBusinessUnitTransfer = $this->expand($jellyfishCompanyBusinessUnitTransfer);
 
         $this->adapter->sendRequest($jellyfishCompanyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $transfer
+     *
+     * @return bool
+     */
+    protected function doValidateExport(EventEntityTransfer $transfer): bool
+    {
+        foreach ($this->validatorPlugins as $validatorPlugin) {
+            if ($validatorPlugin->validate($transfer) === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
