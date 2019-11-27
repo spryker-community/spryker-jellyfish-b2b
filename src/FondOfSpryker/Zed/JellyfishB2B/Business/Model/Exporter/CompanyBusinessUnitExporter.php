@@ -36,7 +36,7 @@ class CompanyBusinessUnitExporter implements ExporterInterface
     protected $adapter;
 
     /**
-     * @var array
+     * @var \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
      */
     protected $validatorPlugins;
 
@@ -45,6 +45,7 @@ class CompanyBusinessUnitExporter implements ExporterInterface
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface[] $jellyfishCompanyBusinessUnitExpanderPlugins
      * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
+     * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[] $validatorPlugins
      */
     public function __construct(
         JellyfishB2BToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
@@ -83,13 +84,10 @@ class CompanyBusinessUnitExporter implements ExporterInterface
      */
     protected function canExport(TransferInterface $transfer): bool
     {
-        if ($transfer instanceof EventEntityTransfer === false ||
-            count($transfer->getModifiedColumns()) === 0 ||
-            $transfer->getName() !== 'spy_company_business_unit') {
-            return false;
-        }
-
-        return $this->doValidateExport($transfer);
+        return $transfer instanceof EventEntityTransfer &&
+            count($transfer->getModifiedColumns()) > 0 &&
+            $transfer->getName() === 'spy_company_business_unit'
+            && $this->validateExport($transfer);
     }
 
     /**
@@ -146,7 +144,7 @@ class CompanyBusinessUnitExporter implements ExporterInterface
      *
      * @return bool
      */
-    protected function doValidateExport(EventEntityTransfer $transfer): bool
+    protected function validateExport(EventEntityTransfer $transfer): bool
     {
         foreach ($this->validatorPlugins as $validatorPlugin) {
             if ($validatorPlugin->validate($transfer) === false) {
@@ -156,5 +154,4 @@ class CompanyBusinessUnitExporter implements ExporterInterface
 
         return true;
     }
-
 }

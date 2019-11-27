@@ -321,12 +321,12 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @throws
      *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
      */
     protected function getExportValidatorPlugins(): array
     {
-        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::EXPORT_VALIDATOR_PLUGINS);
+        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::PLUGINS_EXPORT_VALIDATOR);
     }
 }

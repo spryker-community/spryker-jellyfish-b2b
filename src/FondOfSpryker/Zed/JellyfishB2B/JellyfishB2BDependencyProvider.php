@@ -23,7 +23,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
-    public const EXPORT_VALIDATOR_PLUGINS = 'EXPORT_VALIDATOR_PLUGINS';
+    public const PLUGINS_EXPORT_VALIDATOR = 'PLUGINS_EXPORT_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -161,21 +161,19 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addExportValidatorPlugins(Container $container)
+    protected function addExportValidatorPlugins(Container $container): Container
     {
-        $container[static::EXPORT_VALIDATOR_PLUGINS] = function (Container $container) {
-            return $this->getExportValidatorPlugins($container);
+        $container[static::PLUGINS_EXPORT_VALIDATOR] = function (Container $container) {
+            return $this->getExportValidatorPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
+     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
      */
-    protected function getExportValidatorPlugins(Container $container)
+    protected function getExportValidatorPlugins(): array
     {
         return [];
     }

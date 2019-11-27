@@ -36,7 +36,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
     protected $adapter;
 
     /**
-     * @var array
+     * @var \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
      */
     protected $validatorPlugins;
 
@@ -45,6 +45,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface[] $jellyfishCompanyBusinessUnitExpanderPlugins
      * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
+     * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[] $validatorPlugins
      */
     public function __construct(
         JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade,
@@ -83,13 +84,10 @@ class CompanyUnitAddressExporter implements ExporterInterface
      */
     protected function canExport(TransferInterface $transfer): bool
     {
-        if ($transfer instanceof EventEntityTransfer === null ||
-            count($transfer->getModifiedColumns()) === 0 ||
-            $transfer->getName() !== 'spy_company_unit_address') {
-            return false;
-        }
-
-        return $this->doValidateExport($transfer);
+        return $transfer instanceof EventEntityTransfer &&
+            count($transfer->getModifiedColumns()) > 0 &&
+            $transfer->getName() === 'spy_company_unit_address' &&
+            $this->validateExport($transfer);
     }
 
     /**
@@ -146,7 +144,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
      *
      * @return bool
      */
-    protected function doValidateExport(EventEntityTransfer $transfer): bool
+    protected function validateExport(EventEntityTransfer $transfer): bool
     {
         foreach ($this->validatorPlugins as $validatorPlugin) {
             if ($validatorPlugin->validate($transfer) === false) {
