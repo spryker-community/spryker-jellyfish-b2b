@@ -44,7 +44,13 @@ class JellyfishOrderExpander implements JellyfishOrderExpanderInterface
             return $jellyfishOrderTransfer;
         }
 
-        return $this->expandWithCompanyFields($jellyfishOrderTransfer, $companyUserTransfer);
+        $jellyfishOrderTransfer = $this->expandWithCompanyFields($jellyfishOrderTransfer, $companyUserTransfer);
+        $jellyfishOrderTransfer = $this->expandWithCompanyBusinessUnitFields(
+            $jellyfishOrderTransfer,
+            $companyUserTransfer
+        );
+
+        return $jellyfishOrderTransfer;
     }
 
     /**
@@ -89,5 +95,25 @@ class JellyfishOrderExpander implements JellyfishOrderExpanderInterface
 
         return $jellyfishOrderTransfer->setCompanyUuid($companyTransfer->getUuid())
             ->setCompanyId($companyTransfer->getIdCompany());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
+     */
+    protected function expandWithCompanyBusinessUnitFields(
+        JellyfishOrderTransfer $jellyfishOrderTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): JellyfishOrderTransfer {
+        $companyBusinessUnitTransfer = $companyUserTransfer->getCompanyBusinessUnit();
+
+        if ($companyBusinessUnitTransfer === null) {
+            return $jellyfishOrderTransfer;
+        }
+
+        return $jellyfishOrderTransfer->setCompanyBusinessUnitUuid($companyBusinessUnitTransfer->getUuid())
+            ->setCompanyBusinessUnitId($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
     }
 }

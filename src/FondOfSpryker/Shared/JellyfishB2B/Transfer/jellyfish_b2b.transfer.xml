@@ -75,6 +75,8 @@
     <transfer name="JellyfishOrder">
         <property name="companyId" type="int"/>
         <property name="companyUuid" type="string"/>
+        <property name="companyBusinessUnitId" type="int"/>
+        <property name="companyBusinessUnitUuid" type="string"/>
         <property name="companyUserReference" type="string"/>
     </transfer>
 </transfers>
