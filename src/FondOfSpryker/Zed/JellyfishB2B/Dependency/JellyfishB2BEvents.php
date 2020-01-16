@@ -13,4 +13,6 @@ interface JellyfishB2BEvents
 
     public const ENTITY_SPY_COMPANY_USER_CREATE = 'Entity.spy_company_user.create';
     public const ENTITY_SPY_COMPANY_USER_UPDATE = 'Entity.spy_company_user.update';
+
+    public const COMPANY_UNIT_ADDRESS_AFTER_DELETE = 'company_unit_address.after.delete';
 }

@@ -8,6 +8,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
 class CompanyUnitAddressExportListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -27,6 +28,7 @@ class CompanyUnitAddressExportListener extends AbstractPlugin implements EventBu
     {
         if ($eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_CREATE
             || $eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_UPDATE
+            || $eventName === JellyfishB2BEvents::COMPANY_UNIT_ADDRESS_AFTER_DELETE
         ) {
             $this->getFacade()->exportCompanyUnitAddressBulk($transfers);
         }

@@ -9,12 +9,14 @@ use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUni
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\JellyfishCompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * Class JellyfishCompanyBusinessUnitDataExpanderPlugin
  * @package FondOfSpryker\Zed\Jellyfish\Dependency\Plugin
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
 class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin implements JellyfishCompanyBusinessUnitExpanderPluginInterface
 {
@@ -83,7 +85,14 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
     protected function expandByAddress(
         JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
     ): JellyfishCompanyBusinessUnitTransfer {
-        $idCompanyUnitAddress = $jellyfishCompanyBusinessUnitTransfer->getAddresses()->offsetGet(0)->getId();
+
+        $jellyfishCompanyUnitAddressTransfer = $jellyfishCompanyBusinessUnitTransfer->getAddresses()->offsetGet(0);
+
+        if ($jellyfishCompanyUnitAddressTransfer->getCompanyBusinessUnits() !== null) {
+            return $this->expandByCompanyUnitAddressTransfer($jellyfishCompanyBusinessUnitTransfer, $jellyfishCompanyUnitAddressTransfer);
+        }
+
+        $idCompanyUnitAddress = $jellyfishCompanyUnitAddressTransfer->getId();
 
         return $this->expandByCompanyUnitAddressId($jellyfishCompanyBusinessUnitTransfer, $idCompanyUnitAddress);
     }
@@ -159,6 +168,30 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
         }
 
         $companyBusinessUnitTransfer = $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()
+            ->offsetGet(0);
+
+        return $this->expandByCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer, $companyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer
+     */
+    protected function expandByCompanyUnitAddressTransfer(
+        JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer,
+        JellyfishCompanyUnitAddressTransfer $jellyfishCompanyUnitAddressTransfer
+    ): JellyfishCompanyBusinessUnitTransfer {
+
+        $jellyfishCompanyBusinessUnitCollectionTransfer = $jellyfishCompanyUnitAddressTransfer->getCompanyBusinessUnits();
+
+        if ($jellyfishCompanyBusinessUnitCollectionTransfer === null || !$jellyfishCompanyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->offsetExists(0)) {
+            return $jellyfishCompanyBusinessUnitCollectionTransfer;
+        }
+
+        $companyBusinessUnitTransfer = $jellyfishCompanyBusinessUnitCollectionTransfer
+            ->getCompanyBusinessUnits()
             ->offsetGet(0);
 
         return $this->expandByCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer, $companyBusinessUnitTransfer);

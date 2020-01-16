@@ -10,11 +10,4 @@ interface ExporterInterface
      * @return void
      */
     public function exportBulk(array $transfers): void;
-
-    /**
-     * @param int $id
-     *
-     * @return void
-     */
-    public function exportById(int $id): void;
 }
