@@ -26,6 +26,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUserMap
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCustomerMapper;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCustomerMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitAddressExpanderPlugin;
+use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitCompanyExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitDataExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface;
@@ -163,6 +164,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createCompanyBusinessUnitDataExpanderPlugin(),
+            $this->createCompanyBusinessUnitBillingAddressExpanderPlugin(),
             $this->createCompanyBusinessUnitAddressExpanderPlugin(),
             $this->createCompanyBusinessUnitCompanyExpanderPlugin(),
         ];
@@ -177,6 +179,18 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyBusinessUnitFacade(),
             $this->getCompanyUnitAddressFacade(),
             $this->createCompanyBusinessUnitMapper()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface
+     */
+    protected function createCompanyBusinessUnitBillingAddressExpanderPlugin(): JellyfishCompanyBusinessUnitExpanderPluginInterface
+    {
+        return new JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getCompanyUnitAddressFacade(),
+            $this->createCompanyUnitAddressMapper()
         );
     }
 

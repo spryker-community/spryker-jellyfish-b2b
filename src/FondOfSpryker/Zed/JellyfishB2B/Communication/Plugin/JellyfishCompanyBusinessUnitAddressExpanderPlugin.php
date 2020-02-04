@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
 class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin implements JellyfishCompanyBusinessUnitExpanderPluginInterface
 {
@@ -72,14 +73,10 @@ class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin i
             $jellyfishCompanyUnitAddressTransfer = $this->jellyfishCompanyUnitAddressMapper
                 ->fromCompanyUnitAddress($companyUnitAddressTransfer);
 
-            if ($jellyfishCompanyBusinessUnitTransfer->getBillingAddress() === null
-                && !$this->companyUnitAddressChecker->isDefaultBilling($companyUnitAddressTransfer)
-            ) {
+            if (!$this->companyUnitAddressChecker->isDefaultBilling($companyUnitAddressTransfer)) {
                 $jellyfishCompanyBusinessUnitTransfer->addAddress($jellyfishCompanyUnitAddressTransfer);
                 continue;
             }
-
-            $jellyfishCompanyBusinessUnitTransfer->setBillingAddress($jellyfishCompanyUnitAddressTransfer);
         }
 
         return $jellyfishCompanyBusinessUnitTransfer;
