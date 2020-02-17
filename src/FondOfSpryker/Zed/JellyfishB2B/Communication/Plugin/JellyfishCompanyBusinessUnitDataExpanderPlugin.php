@@ -187,7 +187,7 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
         $jellyfishCompanyBusinessUnitCollectionTransfer = $jellyfishCompanyUnitAddressTransfer->getCompanyBusinessUnits();
 
         if ($jellyfishCompanyBusinessUnitCollectionTransfer === null || !$jellyfishCompanyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->offsetExists(0)) {
-            return $jellyfishCompanyBusinessUnitCollectionTransfer;
+            return $jellyfishCompanyBusinessUnitTransfer;
         }
 
         $companyBusinessUnitTransfer = $jellyfishCompanyBusinessUnitCollectionTransfer
