@@ -8,6 +8,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAd
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\JellyfishCompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -73,12 +74,34 @@ class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin i
             $jellyfishCompanyUnitAddressTransfer = $this->jellyfishCompanyUnitAddressMapper
                 ->fromCompanyUnitAddress($companyUnitAddressTransfer);
 
-            if (!$this->companyUnitAddressChecker->isDefaultBilling($companyUnitAddressTransfer)) {
+            if (!$this->companyUnitAddressChecker->isDefaultBilling($companyUnitAddressTransfer)
+                && !$this->hasAddress($jellyfishCompanyBusinessUnitTransfer, $jellyfishCompanyUnitAddressTransfer)
+            ) {
                 $jellyfishCompanyBusinessUnitTransfer->addAddress($jellyfishCompanyUnitAddressTransfer);
                 continue;
             }
         }
 
         return $jellyfishCompanyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\JellyfishCompanyUnitAddressTransfer $searchedJellyfishCompanyUnitAddressTransfer
+     *
+     * @return bool
+     */
+    protected function hasAddress(
+        JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer,
+        JellyfishCompanyUnitAddressTransfer $searchedJellyfishCompanyUnitAddressTransfer
+    ): bool {
+
+        foreach ($jellyfishCompanyBusinessUnitTransfer->getAddresses() as $jellyfishCompanyUnitAddressTransfer) {
+            if ($jellyfishCompanyUnitAddressTransfer->getId() === $searchedJellyfishCompanyUnitAddressTransfer->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
