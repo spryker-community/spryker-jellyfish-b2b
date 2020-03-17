@@ -78,7 +78,6 @@ class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin i
                 && !$this->hasAddress($jellyfishCompanyBusinessUnitTransfer, $jellyfishCompanyUnitAddressTransfer)
             ) {
                 $jellyfishCompanyBusinessUnitTransfer->addAddress($jellyfishCompanyUnitAddressTransfer);
-                continue;
             }
         }
 
