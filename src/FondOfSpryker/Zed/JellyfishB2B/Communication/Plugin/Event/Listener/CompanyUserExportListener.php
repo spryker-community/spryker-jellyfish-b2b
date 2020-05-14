@@ -3,12 +3,13 @@
 namespace FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\Event\Listener;
 
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\JellyfishB2BEvents;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Shared\Log\LoggerTrait;
 
 /**
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
 class CompanyUserExportListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -30,6 +31,7 @@ class CompanyUserExportListener extends AbstractPlugin implements EventBulkHandl
     {
         if ($eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_USER_CREATE
             || $eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_USER_UPDATE
+            || $eventName === JellyfishB2BEvents::COMPANY_USER_AFTER_DELETE
         ) {
             $this->getFacade()->exportCompanyUserBulk($transfers);
         }
