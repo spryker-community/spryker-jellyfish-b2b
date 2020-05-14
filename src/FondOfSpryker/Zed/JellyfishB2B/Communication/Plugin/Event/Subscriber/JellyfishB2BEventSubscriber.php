@@ -62,6 +62,11 @@ class JellyfishB2BEventSubscriber extends AbstractPlugin implements EventSubscri
             new CompanyUserExportListener()
         );
 
+        $eventCollection->addListenerQueued(
+            JellyfishB2BEvents::COMPANY_USER_AFTER_DELETE,
+            new CompanyUserExportListener()
+        );
+
         return $eventCollection;
     }
 }

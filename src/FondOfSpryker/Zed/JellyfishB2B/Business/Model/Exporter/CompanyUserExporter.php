@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter;
 use FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUserMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\LoggerTrait;
@@ -12,6 +13,9 @@ use Spryker\Shared\Log\LoggerTrait;
 class CompanyUserExporter implements ExporterInterface
 {
     use LoggerTrait;
+
+    protected const EVENT_ENTITY_TRANSFER_NAME = 'spy_company_user';
+    protected const EVENT_ENTITY_TRANSFER_DATA_KEY_COMPANY_USER = 'company_user';
 
     /**
      * @var \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface $companyUserFacade
@@ -29,6 +33,11 @@ class CompanyUserExporter implements ExporterInterface
     protected $adapter;
 
     /**
+     * @var \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
+     */
+    protected $companyUserExpanderPlugins;
+
+    /**
      * @var \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
      */
     protected $validatorPlugins;
@@ -36,12 +45,14 @@ class CompanyUserExporter implements ExporterInterface
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface $companyUserFacade
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUserMapperInterface $jellyfishCompanyUserMapper
-     * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
+     * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
+     * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface|array $adapter
      * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[] $validatorPlugins
      */
     public function __construct(
         JellyfishB2BToCompanyUserFacadeInterface $companyUserFacade,
         JellyfishCompanyUserMapperInterface $jellyfishCompanyUserMapper,
+        array $companyUserExpanderPlugins,
         AdapterInterface $adapter,
         array $validatorPlugins
     ) {
@@ -49,6 +60,7 @@ class CompanyUserExporter implements ExporterInterface
         $this->jellyfishCompanyUserMapper = $jellyfishCompanyUserMapper;
         $this->adapter = $adapter;
         $this->validatorPlugins = $validatorPlugins;
+        $this->companyUserExpanderPlugins = $companyUserExpanderPlugins;
     }
 
     /**
@@ -63,7 +75,7 @@ class CompanyUserExporter implements ExporterInterface
                 continue;
             }
 
-            $this->exportById($transfer->getId());
+            $this->export($transfer);
         }
     }
 
@@ -74,24 +86,90 @@ class CompanyUserExporter implements ExporterInterface
      */
     protected function canExport(TransferInterface $transfer): bool
     {
-        return $transfer instanceof EventEntityTransfer &&
+        return ($transfer instanceof EventEntityTransfer &&
             count($transfer->getModifiedColumns()) > 0 &&
             $transfer->getName() === 'spy_company_user' &&
-            $this->validateExport($transfer);
+            $this->validateExport($transfer)) ||
+            ($transfer instanceof  CompanyUserTransfer &&
+                $this->validateExport(
+                    $this->mapCompanyUserTransferToEventEntityTransfer($transfer)
+                )
+            );
     }
 
     /**
-     * @param int $id
-     *
      * @return void
      */
-    public function exportById(int $id): void
+    public function export(TransferInterface $transfer): void
     {
-        $companyUser = $this->companyUserFacade->getCompanyUserById($id);
+        $companyUserTransfer = $this->getCompanyUser($transfer);
 
-        $jellyfishCompanyUserTransfer = $this->jellyfishCompanyUserMapper->fromCompanyUser($companyUser);
+        if ($companyUserTransfer === null || $companyUserTransfer->getIdCompanyUser() === null) {
+            return;
+        }
+
+        $companyUserTransfer = $this->expandCompanyUserTransfer($companyUserTransfer);
+        $jellyfishCompanyUserTransfer = $this->jellyfishCompanyUserMapper->fromCompanyUser($companyUserTransfer);
 
         $this->adapter->sendRequest($jellyfishCompanyUserTransfer);
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function getCompanyUser(TransferInterface $transfer): CompanyUserTransfer
+    {
+        if ($transfer instanceof CompanyUserTransfer) {
+            return $transfer;
+        }
+
+        return $this->companyUserFacade
+            ->getCompanyUserById($transfer->getId());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer
+     */
+    protected function mapCompanyUserTransferToEventEntityTransfer(
+        CompanyUserTransfer $companyUserTransfer
+    ): EventEntityTransfer {
+
+        $eventEntityTransfer = new EventEntityTransfer();
+        $eventEntityTransfer->setName(self::EVENT_ENTITY_TRANSFER_NAME)
+            ->setId($companyUserTransfer->getIdCompanyUser())
+            ->setForeignKeys(
+                [
+                    sprintf('%s.fk_company', self::EVENT_ENTITY_TRANSFER_NAME) =>
+                        $companyUserTransfer->getFkCompany(),
+                ]
+            )
+        ->setTransferData(
+            [
+                self::EVENT_ENTITY_TRANSFER_DATA_KEY_COMPANY_USER => $companyUserTransfer,
+            ]
+        );
+
+        return $eventEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function expandCompanyUserTransfer(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserTransfer {
+        foreach ($this->companyUserExpanderPlugins as $companyUserExpanderPlugin) {
+             $companyUserTransfer = $companyUserExpanderPlugin
+                ->expand($companyUserTransfer);
+        }
+
+        return $companyUserTransfer;
     }
 
     /**

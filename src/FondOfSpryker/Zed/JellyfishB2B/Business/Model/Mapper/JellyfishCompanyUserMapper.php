@@ -53,6 +53,7 @@ class JellyfishCompanyUserMapper implements JellyfishCompanyUserMapperInterface
         $jellyfishCompanyUser->setActive($companyUserTransfer->getIsActive());
         $jellyfishCompanyUser->setCustomer($this->jellyfishCustomerMapper->fromCustomer($companyUserTransfer->getCustomer()));
         $jellyfishCompanyUser->setCompanyBusinessUnit($jellyfishCompanyBusinessUnit);
+        $jellyfishCompanyUser->setIsDeleted($companyUserTransfer->getIsDeleted());
 
         return $jellyfishCompanyUser;
     }
