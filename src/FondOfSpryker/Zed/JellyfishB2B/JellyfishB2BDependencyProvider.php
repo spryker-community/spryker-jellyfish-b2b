@@ -24,6 +24,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PLUGINS_EXPORT_VALIDATOR = 'PLUGINS_EXPORT_VALIDATOR';
+    public const PLUGINS_COMPANY_USER_EXPORTER_COMPANY_USER_EXPANDER = 'PLUGINS_COMPANY_USER_EXPORTER_COMPANY_USER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,6 +41,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyUserReferenceFacade($container);
         $container = $this->addExportValidatorPlugins($container);
+        $container = $this->addCompanyUserExporterCompanyUserExpanderPlugins($container);
 
         return $container;
     }
@@ -171,9 +173,31 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserExporterCompanyUserExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_EXPORTER_COMPANY_USER_EXPANDER] = function (Container $container) {
+            return $this->getCompanyUserExporterCompanyUserExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
      */
     protected function getExportValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
+     */
+    protected function getCompanyUserExporterCompanyUserExpanderPlugins(): array
     {
         return [];
     }
