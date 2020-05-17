@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * Class JellyfishCompanyBusinessUnitDataExpanderPlugin
+ *
  * @package FondOfSpryker\Zed\Jellyfish\Dependency\Plugin
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
  * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
@@ -85,7 +86,6 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
     protected function expandByAddress(
         JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
     ): JellyfishCompanyBusinessUnitTransfer {
-
         $jellyfishCompanyUnitAddressTransfer = $jellyfishCompanyBusinessUnitTransfer->getAddresses()->offsetGet(0);
 
         if ($jellyfishCompanyUnitAddressTransfer->getCompanyBusinessUnits() !== null) {
@@ -175,7 +175,7 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
 
     /**
      * @param \Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
-     * @param int $idCompanyUnitAddress
+     * @param \Generated\Shared\Transfer\JellyfishCompanyUnitAddressTransfer $jellyfishCompanyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer
      */
@@ -183,7 +183,6 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
         JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer,
         JellyfishCompanyUnitAddressTransfer $jellyfishCompanyUnitAddressTransfer
     ): JellyfishCompanyBusinessUnitTransfer {
-
         $jellyfishCompanyBusinessUnitCollectionTransfer = $jellyfishCompanyUnitAddressTransfer->getCompanyBusinessUnits();
 
         if ($jellyfishCompanyBusinessUnitCollectionTransfer === null || !$jellyfishCompanyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->offsetExists(0)) {

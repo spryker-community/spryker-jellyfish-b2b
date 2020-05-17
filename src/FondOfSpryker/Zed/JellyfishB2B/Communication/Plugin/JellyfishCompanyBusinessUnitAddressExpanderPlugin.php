@@ -66,15 +66,12 @@ class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin i
         $companyUnitAddressCollectionTransfer = $this->companyUnitAddressFacade
             ->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
 
-        if ($companyUnitAddressCollectionTransfer === null) {
-            return $jellyfishCompanyBusinessUnitTransfer;
-        }
-
         foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
             $jellyfishCompanyUnitAddressTransfer = $this->jellyfishCompanyUnitAddressMapper
                 ->fromCompanyUnitAddress($companyUnitAddressTransfer);
 
-            if (!$this->companyUnitAddressChecker->isDefaultBilling($companyUnitAddressTransfer)
+            if (
+                !$this->companyUnitAddressChecker->isDefaultBilling($companyUnitAddressTransfer)
                 && !$this->hasAddress($jellyfishCompanyBusinessUnitTransfer, $jellyfishCompanyUnitAddressTransfer)
             ) {
                 $jellyfishCompanyBusinessUnitTransfer->addAddress($jellyfishCompanyUnitAddressTransfer);
@@ -94,7 +91,6 @@ class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin i
         JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer,
         JellyfishCompanyUnitAddressTransfer $searchedJellyfishCompanyUnitAddressTransfer
     ): bool {
-
         foreach ($jellyfishCompanyBusinessUnitTransfer->getAddresses() as $jellyfishCompanyUnitAddressTransfer) {
             if ($jellyfishCompanyUnitAddressTransfer->getId() === $searchedJellyfishCompanyUnitAddressTransfer->getId()) {
                 return true;

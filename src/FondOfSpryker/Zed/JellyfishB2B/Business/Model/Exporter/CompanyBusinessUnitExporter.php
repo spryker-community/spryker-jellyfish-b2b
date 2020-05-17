@@ -73,6 +73,7 @@ class CompanyBusinessUnitExporter implements ExporterInterface
                 continue;
             }
 
+            /** @var \Generated\Shared\Transfer\EventEntityTransfer $transfer */
             $this->exportById($transfer->getId());
         }
     }
@@ -129,7 +130,7 @@ class CompanyBusinessUnitExporter implements ExporterInterface
         $companyBusinessUnitTransfer = $this->companyBusinessUnitFacade
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
 
-        if ($companyBusinessUnitTransfer === null || $companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === null) {
+        if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === null) {
             return;
         }
 

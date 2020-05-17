@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class JellyfishB2BToCompanyUserReferenceFacadeBridge implements JellyfishB2BToCompanyUserReferenceFacadeInterface
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyUsersRestApi\Business\CompanyUsersRestApiFacadeInterface
+     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\CompanyUserReferenceFacadeInterface
      */
     protected $companyUserReferenceFacade;
 

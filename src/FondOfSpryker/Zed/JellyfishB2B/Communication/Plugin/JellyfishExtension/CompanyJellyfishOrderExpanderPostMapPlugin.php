@@ -14,14 +14,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyJellyfishOrderExpanderPostMapPlugin extends AbstractPlugin implements JellyfishOrderExpanderPostMapPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrder
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
      *
-     * @return \Generated\Shared\Transfer\JellyfishOrderAddressTransfer
+     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
      */
     public function expand(
         JellyfishOrderTransfer $jellyfishOrderTransfer,

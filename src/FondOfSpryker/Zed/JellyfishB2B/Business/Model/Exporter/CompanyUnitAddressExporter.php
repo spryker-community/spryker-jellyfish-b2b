@@ -75,6 +75,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
                 continue;
             }
 
+            /** @var \Generated\Shared\Transfer\EventEntityTransfer $transfer */
             $this->export($transfer);
         }
     }
@@ -86,7 +87,6 @@ class CompanyUnitAddressExporter implements ExporterInterface
      */
     protected function canExport(TransferInterface $transfer): bool
     {
-
         return ($transfer instanceof EventEntityTransfer &&
             count($transfer->getModifiedColumns()) > 0 &&
             $transfer->getName() === self::EVENT_ENTITY_TRANSFER_NAME &&
@@ -144,7 +144,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
     {
         $companyUnitAddressTransfer = $this->getCompanyUnitAddress($transfer);
 
-        if ($companyUnitAddressTransfer === null || $companyUnitAddressTransfer->getIdCompanyUnitAddress() === null) {
+        if ($companyUnitAddressTransfer->getIdCompanyUnitAddress() === null) {
             return;
         }
 
@@ -180,7 +180,6 @@ class CompanyUnitAddressExporter implements ExporterInterface
     protected function mapCompanyUnitAddressTransferToEventEntityTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): EventEntityTransfer {
-
         $eventEntityTransfer = new EventEntityTransfer();
         $eventEntityTransfer->setName(self::EVENT_ENTITY_TRANSFER_NAME)
             ->setForeignKeys(

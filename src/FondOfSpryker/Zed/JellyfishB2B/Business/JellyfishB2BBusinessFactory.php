@@ -261,8 +261,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\Jellyfish\Dependency\Service\JellyfishToUtilEncodingServiceInterface
      */
     protected function getUtilEncodingService(): JellyfishToUtilEncodingServiceInterface
@@ -271,8 +269,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface
      */
     protected function getCompanyFacade(): JellyfishB2BToCompanyFacadeInterface
@@ -281,8 +277,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface
      */
     protected function getCompanyBusinessUnitFacade(): JellyfishB2BToCompanyBusinessUnitFacadeInterface
@@ -291,8 +285,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface
      */
     protected function getCompanyUnitAddressFacade(): JellyfishB2BToCompanyUnitAddressFacadeInterface
@@ -301,8 +293,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeInterface
      */
     protected function getCustomerFacade(): JellyfishB2BToCustomerFacadeInterface
@@ -311,8 +301,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface
      */
     protected function getCompanyUserFacade(): JellyfishB2BToCompanyUserFacadeInterface
@@ -321,8 +309,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeInterface
      */
     protected function getCompanyUserReferenceFacade(): JellyfishB2BToCompanyUserReferenceFacadeInterface
@@ -331,8 +317,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
      */
     protected function getExportValidatorPlugins(): array
