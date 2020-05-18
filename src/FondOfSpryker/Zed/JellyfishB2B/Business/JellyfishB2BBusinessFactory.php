@@ -37,7 +37,6 @@ use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserRe
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
 use FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BDependencyProvider;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -173,16 +172,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
-     */
-    protected function createCompanyUserExporterExpanderPlugins(): array
-    {
-        return [
-            $this->createCompanyUserCustomerExpanderPlugin(),
-        ];
-    }
-
-    /**
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface
      */
     protected function createCompanyBusinessUnitDataExpanderPlugin(): JellyfishCompanyBusinessUnitExpanderPluginInterface
@@ -247,13 +236,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->createHttpClient(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function createCompanyUserCustomerExpanderPlugin(): CompanyUserTransfer
-    {
     }
 
     /**
@@ -344,9 +326,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
-         * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
+     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
      */
     protected function getCompanyUserExporterCompanyUserExpanderPlugins(): array
     {

@@ -45,8 +45,8 @@ class CompanyUserExporter implements ExporterInterface
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface $companyUserFacade
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUserMapperInterface $jellyfishCompanyUserMapper
-     * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
-     * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface|array $adapter
+     * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[] $companyUserExpanderPlugins
+     * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
      * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[] $validatorPlugins
      */
     public function __construct(
@@ -98,6 +98,8 @@ class CompanyUserExporter implements ExporterInterface
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
+     *
      * @return void
      */
     public function export(TransferInterface $transfer): void
@@ -117,27 +119,29 @@ class CompanyUserExporter implements ExporterInterface
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    protected function getCompanyUser(TransferInterface $transfer): CompanyUserTransfer
+    protected function getCompanyUser(TransferInterface $transfer): ?CompanyUserTransfer
     {
         if ($transfer instanceof CompanyUserTransfer) {
             return $transfer;
         }
 
-        return $this->companyUserFacade
-            ->getCompanyUserById($transfer->getId());
+        if ($transfer instanceof EventEntityTransfer) {
+            return $this->companyUserFacade->getCompanyUserById($transfer->getId());
+        }
+
+        return null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\EventEntityTransfer
      */
     protected function mapCompanyUserTransferToEventEntityTransfer(
         CompanyUserTransfer $companyUserTransfer
     ): EventEntityTransfer {
-
         $eventEntityTransfer = new EventEntityTransfer();
         $eventEntityTransfer->setName(self::EVENT_ENTITY_TRANSFER_NAME)
             ->setId($companyUserTransfer->getIdCompanyUser())

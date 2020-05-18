@@ -69,11 +69,14 @@ class CompanyBusinessUnitExporter implements ExporterInterface
     public function exportBulk(array $transfers): void
     {
         foreach ($transfers as $transfer) {
+            if (!($transfer instanceof EventEntityTransfer)) {
+                continue;
+            }
+
             if (!$this->canExport($transfer)) {
                 continue;
             }
 
-            /** @var \Generated\Shared\Transfer\EventEntityTransfer $transfer */
             $this->exportById($transfer->getId());
         }
     }

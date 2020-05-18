@@ -91,7 +91,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
             count($transfer->getModifiedColumns()) > 0 &&
             $transfer->getName() === self::EVENT_ENTITY_TRANSFER_NAME &&
             $this->validateExport($transfer)) ||
-            ($transfer instanceof  CompanyUnitAddressTransfer &&
+            ($transfer instanceof CompanyUnitAddressTransfer &&
                 $this->validateExport(
                     $this->mapCompanyUnitAddressTransferToEventEntityTransfer($transfer)
                 )
@@ -124,17 +124,6 @@ class CompanyUnitAddressExporter implements ExporterInterface
         return $jellyfishCompanyBusinessUnitTransfer;
     }
 
-    protected function expandDeleted(
-        JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
-    ): JellyfishCompanyBusinessUnitTransfer {
-        foreach ($this->jellyfishCompanyBusinessUnitExpanderPlugins as $jellyfishCompanyBusinessUnitExpanderPlugin) {
-            $jellyfishCompanyBusinessUnitTransfer = $jellyfishCompanyBusinessUnitExpanderPlugin
-                ->expand($jellyfishCompanyBusinessUnitTransfer);
-        }
-
-        return $jellyfishCompanyBusinessUnitTransfer;
-    }
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
@@ -144,7 +133,7 @@ class CompanyUnitAddressExporter implements ExporterInterface
     {
         $companyUnitAddressTransfer = $this->getCompanyUnitAddress($transfer);
 
-        if ($companyUnitAddressTransfer->getIdCompanyUnitAddress() === null) {
+        if ($companyUnitAddressTransfer === null || $companyUnitAddressTransfer->getIdCompanyUnitAddress() === null) {
             return;
         }
 
@@ -157,16 +146,20 @@ class CompanyUnitAddressExporter implements ExporterInterface
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
-    protected function getCompanyUnitAddress(TransferInterface $transfer): CompanyUnitAddressTransfer
+    protected function getCompanyUnitAddress(TransferInterface $transfer): ?CompanyUnitAddressTransfer
     {
         if ($transfer instanceof CompanyUnitAddressTransfer) {
             return $transfer;
         }
 
-        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($transfer->getId());
+        if (!($transfer instanceof EventEntityTransfer)) {
+            return null;
+        }
+
+        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())
+            ->setIdCompanyUnitAddress($transfer->getId());
 
         return $this->companyUnitAddressFacade
             ->getCompanyUnitAddressById($companyUnitAddressTransfer);
