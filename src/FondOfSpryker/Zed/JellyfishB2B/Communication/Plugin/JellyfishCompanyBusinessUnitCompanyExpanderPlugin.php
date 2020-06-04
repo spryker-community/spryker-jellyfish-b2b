@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
 class JellyfishCompanyBusinessUnitCompanyExpanderPlugin extends AbstractPlugin implements JellyfishCompanyBusinessUnitExpanderPluginInterface
 {
@@ -41,10 +42,9 @@ class JellyfishCompanyBusinessUnitCompanyExpanderPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer
      */
-    public function expand(JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
-    ): JellyfishCompanyBusinessUnitTransfer
-    {
-
+    public function expand(
+        JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
+    ): JellyfishCompanyBusinessUnitTransfer {
         if ($jellyfishCompanyBusinessUnitTransfer->getId() === null) {
             return $jellyfishCompanyBusinessUnitTransfer;
         }

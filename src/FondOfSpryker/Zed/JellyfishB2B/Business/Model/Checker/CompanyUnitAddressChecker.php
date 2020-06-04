@@ -15,7 +15,8 @@ class CompanyUnitAddressChecker implements CompanyUnitAddressCheckerInterface
     {
         $companyBusinessUnitCollectionTransfer = $companyUnitAddressTransfer->getCompanyBusinessUnits();
 
-        if ($companyBusinessUnitCollectionTransfer === null
+        if (
+            $companyBusinessUnitCollectionTransfer === null
             || $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->count() !== 1
         ) {
             return false;

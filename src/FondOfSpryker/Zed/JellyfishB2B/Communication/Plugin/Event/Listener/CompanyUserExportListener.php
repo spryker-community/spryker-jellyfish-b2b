@@ -16,9 +16,7 @@ class CompanyUserExportListener extends AbstractPlugin implements EventBulkHandl
     use LoggerTrait;
 
     /**
-     * Specification
-     *  - Listeners needs to implement this interface to execute the codes for more
-     *  than one event at same time (Bulk Operation)
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +27,8 @@ class CompanyUserExportListener extends AbstractPlugin implements EventBulkHandl
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        if ($eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_USER_CREATE
+        if (
+            $eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_USER_CREATE
             || $eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_USER_UPDATE
             || $eventName === JellyfishB2BEvents::COMPANY_USER_AFTER_DELETE
         ) {

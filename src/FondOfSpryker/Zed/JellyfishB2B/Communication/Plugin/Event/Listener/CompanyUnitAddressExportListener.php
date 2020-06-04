@@ -13,9 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyUnitAddressExportListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * Specification
-     *  - Listeners needs to implement this interface to execute the codes for more
-     *  than one event at same time (Bulk Operation)
+     * {@inheritDoc}
      *
      * @api
      *
@@ -26,7 +24,8 @@ class CompanyUnitAddressExportListener extends AbstractPlugin implements EventBu
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        if ($eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_CREATE
+        if (
+            $eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_CREATE
             || $eventName === JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_UPDATE
             || $eventName === JellyfishB2BEvents::COMPANY_UNIT_ADDRESS_AFTER_DELETE
         ) {

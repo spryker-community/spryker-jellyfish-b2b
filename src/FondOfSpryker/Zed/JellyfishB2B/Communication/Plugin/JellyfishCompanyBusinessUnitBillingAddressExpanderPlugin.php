@@ -34,6 +34,8 @@ class JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin extends AbstractP
 
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapperInterface $jellyfishCompanyUnitAddressMapper
      */
     public function __construct(
         JellyfishB2BToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
@@ -53,8 +55,8 @@ class JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin extends AbstractP
     public function expand(
         JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
     ): JellyfishCompanyBusinessUnitTransfer {
-
-        if ($jellyfishCompanyBusinessUnitTransfer->getId() === null ||
+        if (
+            $jellyfishCompanyBusinessUnitTransfer->getId() === null ||
             $jellyfishCompanyBusinessUnitTransfer->getBillingAddress() !== null
         ) {
             return $jellyfishCompanyBusinessUnitTransfer;

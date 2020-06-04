@@ -8,13 +8,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
 class CompanyExportListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * Specification
-     *  - Listeners needs to implement this interface to execute the codes for more
-     *  than one event at same time (Bulk Operation)
+     * {@inheritDoc}
      *
      * @api
      *

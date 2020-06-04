@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface JellyfishB2BToCustomerFacadeInterface
