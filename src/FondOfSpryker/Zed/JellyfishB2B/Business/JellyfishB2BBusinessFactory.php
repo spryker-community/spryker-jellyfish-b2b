@@ -10,6 +10,10 @@ use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressChec
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\JellyfishOrderExpander;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\JellyfishOrderExpanderInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCommentJellyfishOrderExpander;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCommentJellyfishOrderExpanderInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCustomReferenceJellyfishOrderExpander;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCustomReferenceJellyfishOrderExpanderInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\CompanyBusinessUnitExporter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\CompanyExporter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\CompanyUnitAddressExporter;
@@ -52,6 +56,22 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     public function createJellyfishOrderExpander(): JellyfishOrderExpanderInterface
     {
         return new JellyfishOrderExpander($this->getCompanyUserReferenceFacade());
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCommentJellyfishOrderExpanderInterface
+     */
+    public function createOrderCommentJellyfishOrderExpander(): OrderCommentJellyfishOrderExpanderInterface
+    {
+        return new OrderCommentJellyfishOrderExpander();
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCustomReferenceJellyfishOrderExpanderInterface
+     */
+    public function createOrderCustomReferenceJellyfishOrderExpander(): OrderCustomReferenceJellyfishOrderExpanderInterface
+    {
+        return new OrderCustomReferenceJellyfishOrderExpander();
     }
 
     /**

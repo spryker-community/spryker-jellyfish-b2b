@@ -19,6 +19,28 @@ interface JellyfishB2BFacadeInterface
     ): JellyfishOrderTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
+     *
+     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
+     */
+    public function expandJellyfishOrderWithOrderComment(
+        JellyfishOrderTransfer $jellyfishOrderTransfer,
+        SpySalesOrder $spySalesOrder
+    ): JellyfishOrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
+     *
+     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
+     */
+    public function expandJellyfishOrderWithOrderCustomReference(
+        JellyfishOrderTransfer $jellyfishOrderTransfer,
+        SpySalesOrder $spySalesOrder
+    ): JellyfishOrderTransfer;
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @return void
