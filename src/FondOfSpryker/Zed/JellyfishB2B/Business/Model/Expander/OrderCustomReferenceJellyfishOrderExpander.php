@@ -3,14 +3,14 @@
 namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander;
 
 use Generated\Shared\Transfer\JellyfishOrderTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrder;
 
 class OrderCustomReferenceJellyfishOrderExpander implements OrderCustomReferenceJellyfishOrderExpanderInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrder $spySalesOrder
      *
      * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
      */
