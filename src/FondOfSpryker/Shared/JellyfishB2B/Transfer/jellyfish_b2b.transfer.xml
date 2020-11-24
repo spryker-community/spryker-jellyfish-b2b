@@ -9,6 +9,7 @@
 
     <transfer name="CompanyUnitAddress">
         <property name="isDeleted" type="bool"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -59,6 +60,7 @@
         <property name="fax" type="string"/>
         <property name="gln" type="string"/>
         <property name="isDeleted" type="string"/>
+        <property name="isDefault" type="string"/>
         <property name="companyBusinessUnits" type="CompanyBusinessUnitCollection"/>
     </transfer>
 

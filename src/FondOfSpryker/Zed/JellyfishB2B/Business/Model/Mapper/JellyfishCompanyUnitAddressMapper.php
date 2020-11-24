@@ -32,6 +32,7 @@ class JellyfishCompanyUnitAddressMapper implements JellyfishCompanyUnitAddressMa
             ->setFax($companyUnitAddressTransfer->getFax())
             ->setGln($companyUnitAddressTransfer->getGln())
             ->setIsDeleted($companyUnitAddressTransfer->getIsDeleted())
+            ->setIsDefault($companyUnitAddressTransfer->getIsDefault())
             ->setCompanyBusinessUnits($companyUnitAddressTransfer->getCompanyBusinessUnits());
 
         return $jellyfishCompanyUnitAddressTransfer;

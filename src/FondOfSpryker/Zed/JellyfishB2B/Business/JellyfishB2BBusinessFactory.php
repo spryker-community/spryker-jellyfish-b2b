@@ -33,6 +33,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusiness
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitCompanyExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitDataExpanderPlugin;
+use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitDefaultAddressExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface;
@@ -187,6 +188,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->createCompanyBusinessUnitDataExpanderPlugin(),
             $this->createCompanyBusinessUnitBillingAddressExpanderPlugin(),
             $this->createCompanyBusinessUnitAddressExpanderPlugin(),
+            $this->createCompanyBusinessUnitDefaultAddressExpanderPlugin(),
             $this->createCompanyBusinessUnitCompanyExpanderPlugin(),
         ];
     }
@@ -224,6 +226,16 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyUnitAddressFacade(),
             $this->createCompanyUnitAddressMapper(),
             $this->createCompanyUnitAddressChecker()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface
+     */
+    protected function createCompanyBusinessUnitDefaultAddressExpanderPlugin(): JellyfishCompanyBusinessUnitExpanderPluginInterface
+    {
+        return new JellyfishCompanyBusinessUnitDefaultAddressExpanderPlugin(
+            $this->getCompanyBusinessUnitFacade()
         );
     }
 
