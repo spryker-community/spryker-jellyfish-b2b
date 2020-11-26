@@ -45,15 +45,13 @@ class JellyfishCompanyBusinessUnitDefaultAddressExpanderPlugin extends AbstractP
             (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId())
         );
 
-        if ($jellyfishCompanyBusinessUnitTransfer->getAddresses() === null) {
-            return $jellyfishCompanyBusinessUnitTransfer;
-        }
-
         foreach ($jellyfishCompanyBusinessUnitTransfer->getAddresses() as $jellyfishCompanyUnitAddressTransfer) {
-            if ($this->isDefaultShippingAddress(
-                $companyBusinessUnitTransfer,
-                $jellyfishCompanyUnitAddressTransfer
-            ) === false ) {
+            if (
+                $this->isDefaultShippingAddress(
+                    $companyBusinessUnitTransfer,
+                    $jellyfishCompanyUnitAddressTransfer
+                ) === false
+            ) {
                 $jellyfishCompanyUnitAddressTransfer->setIsDefault(false);
 
                 continue;
