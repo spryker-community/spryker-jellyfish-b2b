@@ -7,7 +7,6 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrder;
 
 class OrderCustomReferenceJellyfishOrderExpander implements OrderCustomReferenceJellyfishOrderExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
      * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrder $spySalesOrder
@@ -18,7 +17,6 @@ class OrderCustomReferenceJellyfishOrderExpander implements OrderCustomReference
         JellyfishOrderTransfer $jellyfishOrderTransfer,
         SpySalesOrder $spySalesOrder
     ): JellyfishOrderTransfer {
-
         if ($spySalesOrder->getOrderCustomReference() === null) {
             return $jellyfishOrderTransfer;
         }
@@ -27,6 +25,4 @@ class OrderCustomReferenceJellyfishOrderExpander implements OrderCustomReference
 
         return $jellyfishOrderTransfer;
     }
-
-
 }
