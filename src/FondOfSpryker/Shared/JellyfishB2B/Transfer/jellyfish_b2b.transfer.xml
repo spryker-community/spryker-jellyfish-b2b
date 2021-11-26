@@ -10,10 +10,16 @@
     <transfer name="CompanyUnitAddress">
         <property name="isDeleted" type="bool"/>
         <property name="isDefault" type="bool"/>
+        <property name="fax" type="string"/>
+        <property name="gln" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="isDeleted" type="bool"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="externalReference" type="string"/>
     </transfer>
 
     <transfer name="JellyfishCompanyBusinessUnit">
@@ -35,7 +41,7 @@
         <property name="debtorNumber" type="string"/>
         <property name="status" type="string"/>
         <property name="blockedFor" type="string"/>
-        <property name="isActive" type="string"/>
+        <property name="isActive" type="bool"/>
         <property name="priceList" type="JellyfishPriceList"/>
     </transfer>
 
@@ -59,9 +65,10 @@
         <property name="phone" type="string"/>
         <property name="fax" type="string"/>
         <property name="gln" type="string"/>
-        <property name="isDeleted" type="string"/>
-        <property name="isDefault" type="string"/>
+        <property name="isDeleted" type="bool"/>
+        <property name="isDefault" type="bool"/>
         <property name="companyBusinessUnits" type="CompanyBusinessUnitCollection"/>
+        <property name="vatId" type="string"/>
     </transfer>
 
     <transfer name="JellyfishCustomer">
@@ -83,7 +90,7 @@
         <property name="customer" type="JellyfishCustomer"/>
         <property name="companyBusinessUnit" type="JellyfishCompanyBusinessUnit"/>
         <property name="active" type="bool"/>
-        <property name="isDeleted" type="string"/>
+        <property name="isDeleted" type="bool"/>
     </transfer>
 
     <transfer name="JellyfishOrderItem">

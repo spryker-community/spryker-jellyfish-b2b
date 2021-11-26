@@ -10,6 +10,7 @@
   ],
   "require": {
     "php": ">=7.1",
+    "fond-of-oryx/company-unit-address-vat-id": "^1.0",
     "fond-of-spryker/jellyfish-b2b-extension": "dev-master"
   },
   "require-dev": {
