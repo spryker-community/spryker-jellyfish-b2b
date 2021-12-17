@@ -14,10 +14,6 @@
         <property name="gln" type="string"/>
     </transfer>
 
-    <transfer name="CompanyUser">
-        <property name="isDeleted" type="bool"/>
-    </transfer>
-
     <transfer name="Customer">
         <property name="externalReference" type="string"/>
     </transfer>
@@ -89,8 +85,7 @@
         <property name="externalReference" type="string"/>
         <property name="customer" type="JellyfishCustomer"/>
         <property name="companyBusinessUnit" type="JellyfishCompanyBusinessUnit"/>
-        <property name="active" type="bool"/>
-        <property name="isDeleted" type="bool"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="JellyfishOrderItem">
