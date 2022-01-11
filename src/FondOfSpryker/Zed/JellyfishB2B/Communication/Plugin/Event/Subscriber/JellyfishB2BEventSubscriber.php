@@ -50,23 +50,7 @@ class JellyfishB2BEventSubscriber extends AbstractPlugin implements EventSubscri
             JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_UPDATE,
             new CompanyUnitAddressExportListener()
         );
-
-        // Company User
-        $eventCollection->addListenerQueued(
-            JellyfishB2BEvents::ENTITY_SPY_COMPANY_USER_CREATE,
-            new CompanyUserExportListener()
-        );
-
-        $eventCollection->addListenerQueued(
-            JellyfishB2BEvents::ENTITY_SPY_COMPANY_USER_UPDATE,
-            new CompanyUserExportListener()
-        );
-
-        $eventCollection->addListenerQueued(
-            JellyfishB2BEvents::COMPANY_USER_AFTER_DELETE,
-            new CompanyUserExportListener()
-        );
-
+        
         return $eventCollection;
     }
 }
