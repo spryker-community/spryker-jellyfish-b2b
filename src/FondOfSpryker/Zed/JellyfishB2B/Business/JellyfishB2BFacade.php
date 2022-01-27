@@ -55,6 +55,21 @@ class JellyfishB2BFacade extends AbstractFacade implements JellyfishB2BFacadeInt
     }
 
     /**
+     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
+     *
+     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
+     */
+    public function expandJellyfishOrderWithVatId(
+        JellyfishOrderTransfer $jellyfishOrderTransfer,
+        SpySalesOrder $spySalesOrder
+    ): JellyfishOrderTransfer {
+        return $this->getFactory()
+            ->createOrderVatIdJellyfishOrderExpander()
+            ->expand($jellyfishOrderTransfer, $spySalesOrder);
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @return void

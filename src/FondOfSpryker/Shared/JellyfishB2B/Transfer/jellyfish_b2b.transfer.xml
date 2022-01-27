@@ -98,5 +98,6 @@
         <property name="companyBusinessUnitId" type="int"/>
         <property name="companyBusinessUnitUuid" type="string"/>
         <property name="companyUserReference" type="string"/>
+        <property name="vatId" type="string"/>
     </transfer>
 </transfers>
