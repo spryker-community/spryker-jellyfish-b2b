@@ -42,6 +42,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAd
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
 use FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BDependencyProvider;
 use GuzzleHttp\Client as HttpClient;
@@ -180,7 +181,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCompanyMapper(): JellyfishCompanyMapperInterface
     {
-        return new JellyfishCompanyMapper();
+        return new JellyfishCompanyMapper($this->getLocaleFacade());
     }
 
     /**
@@ -359,6 +360,16 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyUserReferenceFacade(): JellyfishB2BToCompanyUserReferenceFacadeInterface
     {
         return $this->getProvidedDependency(JellyfishB2BDependencyProvider::FACADE_COMPANY_USER_REFERENCE);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    protected function getLocaleFacade(): JellyfishB2BToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::FACADE_LOCALE);
     }
 
     /**

@@ -8,6 +8,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAd
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeBridge;
+use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Service\JellyfishB2BToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -20,6 +21,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_COMPANY_USER_REFERENCE = 'FACADE_COMPANY_USER_REFERENCE';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -40,6 +42,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyUserReferenceFacade($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addExportValidatorPlugins($container);
         $container = $this->addCompanyUserExporterCompanyUserExpanderPlugins($container);
 
@@ -152,6 +155,22 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_COMPANY_USER_REFERENCE] = function (Container $container) {
             return new JellyfishB2BToCompanyUserReferenceFacadeBridge(
                 $container->getLocator()->companyUserReference()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new JellyfishB2BToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade()
             );
         };
 

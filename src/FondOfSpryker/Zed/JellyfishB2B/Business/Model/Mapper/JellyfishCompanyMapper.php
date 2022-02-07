@@ -2,12 +2,27 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper;
 
+use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyTransfer;
 use Generated\Shared\Transfer\JellyfishPriceListTransfer;
 
 class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
 {
+    /**
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct( JellyfishB2BToLocaleFacadeInterface $localeFacade)
+    {
+        $this->localeFacade = $localeFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
@@ -24,7 +39,8 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
             ->setDebtorNumber($companyTransfer->getDebtorNumber())
             ->setBlockedFor($companyTransfer->getBlockedFor())
             ->setStatus($companyTransfer->getStatus())
-            ->setIsActive($companyTransfer->getIsActive());
+            ->setIsActive($companyTransfer->getIsActive())
+            ->setLocale($this->mapCompanyToLocale($companyTransfer));
 
         return $jellyfishCompany;
     }
@@ -48,5 +64,19 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
             ->setName($priceList->getName());
 
         return $jellyfishPriceList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return string
+     */
+    protected function mapCompanyToLocale(CompanyTransfer $companyTransfer): string
+    {
+        $companyTransfer->requireFkLocale();
+
+        return $this->localeFacade
+            ->getLocaleById($companyTransfer->getFkLocale())
+            ->getLocaleName();
     }
 }

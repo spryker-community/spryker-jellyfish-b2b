@@ -39,6 +39,7 @@
         <property name="blockedFor" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="priceList" type="JellyfishPriceList"/>
+        <property name="locale" type="string"/>
     </transfer>
 
     <transfer name="JellyfishPriceList">
