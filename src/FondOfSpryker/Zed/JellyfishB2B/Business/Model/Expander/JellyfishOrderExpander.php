@@ -47,7 +47,7 @@ class JellyfishOrderExpander implements JellyfishOrderExpanderInterface
         $jellyfishOrderTransfer = $this->expandWithCompanyFields($jellyfishOrderTransfer, $companyUserTransfer);
         $jellyfishOrderTransfer = $this->expandWithCompanyBusinessUnitFields(
             $jellyfishOrderTransfer,
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $jellyfishOrderTransfer;

@@ -2,10 +2,8 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\Event\Subscriber;
 
-use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\Event\Listener\CompanyBusinessUnitExportListener;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\Event\Listener\CompanyExportListener;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\Event\Listener\CompanyUnitAddressExportListener;
-use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\Event\Listener\CompanyUserExportListener;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\JellyfishB2BEvents;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -28,29 +26,24 @@ class JellyfishB2BEventSubscriber extends AbstractPlugin implements EventSubscri
     {
         $eventCollection->addListenerQueued(
             JellyfishB2BEvents::ENTITY_SPY_COMPANY_UPDATE,
-            new CompanyExportListener()
-        );
-
-        $eventCollection->addListenerQueued(
-            JellyfishB2BEvents::ENTITY_SPY_COMPANY_BUSINESS_UNIT_UPDATE,
-            new CompanyBusinessUnitExportListener()
+            new CompanyExportListener(),
         );
 
         $eventCollection->addListenerQueued(
             JellyfishB2BEvents::COMPANY_UNIT_ADDRESS_AFTER_DELETE,
-            new CompanyUnitAddressExportListener()
+            new CompanyUnitAddressExportListener(),
         );
 
         $eventCollection->addListenerQueued(
             JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_CREATE,
-            new CompanyUnitAddressExportListener()
+            new CompanyUnitAddressExportListener(),
         );
 
         $eventCollection->addListenerQueued(
             JellyfishB2BEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_UPDATE,
-            new CompanyUnitAddressExportListener()
+            new CompanyUnitAddressExportListener(),
         );
-        
+
         return $eventCollection;
     }
 }

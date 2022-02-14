@@ -64,7 +64,7 @@ class JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin extends AbstractP
 
         $companyBusinessUnitTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitById(
             (new CompanyBusinessUnitTransfer())
-                ->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId())
+                ->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId()),
         );
 
         if ($companyBusinessUnitTransfer->getDefaultBillingAddress() === null) {

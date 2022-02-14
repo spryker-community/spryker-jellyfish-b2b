@@ -5,7 +5,6 @@ namespace FondOfSpryker\Zed\JellyfishB2B\Business;
 use FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface;
 use FondOfSpryker\Zed\Jellyfish\Dependency\Service\JellyfishToUtilEncodingServiceInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapter;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyUserAdapter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressChecker;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\JellyfishOrderExpander;
@@ -16,10 +15,8 @@ use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCustomReferenceJ
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderCustomReferenceJellyfishOrderExpanderInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderVatIdJellyfishOrderExpander;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander\OrderVatIdJellyfishOrderExpanderInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\CompanyBusinessUnitExporter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\CompanyExporter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\CompanyUnitAddressExporter;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\CompanyUserExporter;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\ExporterInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapper;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
@@ -27,10 +24,6 @@ use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyMapper;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapper;
 use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapperInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUserMapper;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUserMapperInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCustomerMapper;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCustomerMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitAddressExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin;
 use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusinessUnitCompanyExpanderPlugin;
@@ -39,9 +32,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusiness
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
 use FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BDependencyProvider;
@@ -84,7 +75,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     public function createOrderVatIdJellyfishOrderExpander(): OrderVatIdJellyfishOrderExpanderInterface
     {
         return new OrderVatIdJellyfishOrderExpander(
-            $this->getCompanyUnitAddressFacade()
+            $this->getCompanyUnitAddressFacade(),
         );
     }
 
@@ -98,47 +89,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->createCompanyBusinessUnitMapper(),
             $this->createCompanyExporterExpanderPlugins(),
             $this->createCompanyBusinessUnitAdapter(),
-            $this->getExportValidatorPlugins()
-        );
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\ExporterInterface
-     */
-    public function createCompanyUserExporter(): ExporterInterface
-    {
-        return new CompanyUserExporter(
-            $this->getCompanyUserFacade(),
-            $this->createCompanyUserMapper(),
-            $this->getCompanyUserExporterCompanyUserExpanderPlugins(),
-            $this->createCompanyUserAdapter(),
-            $this->getExportValidatorPlugins()
-        );
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUserMapperInterface
-     */
-    protected function createCompanyUserMapper(): JellyfishCompanyUserMapperInterface
-    {
-        return new JellyfishCompanyUserMapper(
-            $this->createCompanyBusinessUnitMapper(),
-            $this->createCompanyMapper(),
-            $this->createCustomerMapper()
-        );
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter\ExporterInterface
-     */
-    public function createCompanyBusinessUnitExporter(): ExporterInterface
-    {
-        return new CompanyBusinessUnitExporter(
-            $this->getCompanyBusinessUnitFacade(),
-            $this->createCompanyBusinessUnitMapper(),
-            $this->createCompanyExporterExpanderPlugins(),
-            $this->createCompanyBusinessUnitAdapter(),
-            $this->getExportValidatorPlugins()
+            $this->getExportValidatorPlugins(),
         );
     }
 
@@ -152,16 +103,8 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
             $this->createCompanyBusinessUnitMapper(),
             $this->createCompanyExporterExpanderPlugins(),
             $this->createCompanyBusinessUnitAdapter(),
-            $this->getExportValidatorPlugins()
+            $this->getExportValidatorPlugins(),
         );
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCustomerMapperInterface
-     */
-    public function createCustomerMapper(): JellyfishCustomerMapperInterface
-    {
-        return new JellyfishCustomerMapper();
     }
 
     /**
@@ -172,7 +115,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
         return new JellyfishCompanyBusinessUnitMapper(
             $this->createCompanyMapper(),
             $this->createCompanyUnitAddressMapper(),
-            $this->createCompanyUnitAddressChecker()
+            $this->createCompanyUnitAddressChecker(),
         );
     }
 
@@ -214,7 +157,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
         return new JellyfishCompanyBusinessUnitDataExpanderPlugin(
             $this->getCompanyBusinessUnitFacade(),
             $this->getCompanyUnitAddressFacade(),
-            $this->createCompanyBusinessUnitMapper()
+            $this->createCompanyBusinessUnitMapper(),
         );
     }
 
@@ -226,7 +169,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
         return new JellyfishCompanyBusinessUnitBillingAddressExpanderPlugin(
             $this->getCompanyBusinessUnitFacade(),
             $this->getCompanyUnitAddressFacade(),
-            $this->createCompanyUnitAddressMapper()
+            $this->createCompanyUnitAddressMapper(),
         );
     }
 
@@ -238,7 +181,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
         return new JellyfishCompanyBusinessUnitAddressExpanderPlugin(
             $this->getCompanyUnitAddressFacade(),
             $this->createCompanyUnitAddressMapper(),
-            $this->createCompanyUnitAddressChecker()
+            $this->createCompanyUnitAddressChecker(),
         );
     }
 
@@ -248,7 +191,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     protected function createCompanyBusinessUnitDefaultAddressExpanderPlugin(): JellyfishCompanyBusinessUnitExpanderPluginInterface
     {
         return new JellyfishCompanyBusinessUnitDefaultAddressExpanderPlugin(
-            $this->getCompanyBusinessUnitFacade()
+            $this->getCompanyBusinessUnitFacade(),
         );
     }
 
@@ -267,7 +210,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     {
         return new JellyfishCompanyBusinessUnitCompanyExpanderPlugin(
             $this->getCompanyBusinessUnitFacade(),
-            $this->createCompanyMapper()
+            $this->createCompanyMapper(),
         );
     }
 
@@ -279,19 +222,7 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
         return new CompanyBusinessUnitAdapter(
             $this->getUtilEncodingService(),
             $this->createHttpClient(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface
-     */
-    protected function createCompanyUserAdapter(): AdapterInterface
-    {
-        return new CompanyUserAdapter(
-            $this->getUtilEncodingService(),
-            $this->createHttpClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -339,22 +270,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeInterface
-     */
-    protected function getCustomerFacade(): JellyfishB2BToCustomerFacadeInterface
-    {
-        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::FACADE_CUSTOMER);
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeInterface
-     */
-    protected function getCompanyUserFacade(): JellyfishB2BToCompanyUserFacadeInterface
-    {
-        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::FACADE_COMPANY_USER);
-    }
-
-    /**
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeInterface
      */
     protected function getCompanyUserReferenceFacade(): JellyfishB2BToCompanyUserReferenceFacadeInterface
@@ -364,8 +279,6 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function getLocaleFacade(): JellyfishB2BToLocaleFacadeInterface
     {
@@ -373,18 +286,10 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
+     * @return array<\FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface>
      */
     protected function getExportValidatorPlugins(): array
     {
         return $this->getProvidedDependency(JellyfishB2BDependencyProvider::PLUGINS_EXPORT_VALIDATOR);
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
-     */
-    protected function getCompanyUserExporterCompanyUserExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::PLUGINS_COMPANY_USER_EXPORTER_COMPANY_USER_EXPANDER);
     }
 }

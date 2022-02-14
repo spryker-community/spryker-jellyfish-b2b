@@ -51,7 +51,7 @@ class JellyfishCompanyBusinessUnitCompanyExpanderPlugin extends AbstractPlugin i
 
         $companyBusinessUnitTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitById(
             (new CompanyBusinessUnitTransfer())
-                ->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId())
+                ->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId()),
         );
 
         $jellyfishCompanyTransfer = $this->jellyfishCompanyMapper

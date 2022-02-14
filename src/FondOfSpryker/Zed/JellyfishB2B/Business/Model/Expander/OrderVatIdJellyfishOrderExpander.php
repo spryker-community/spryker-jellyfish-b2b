@@ -27,8 +27,6 @@ class OrderVatIdJellyfishOrderExpander implements OrderVatIdJellyfishOrderExpand
      * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrder $spySalesOrder
      *
      * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function expand(
         JellyfishOrderTransfer $jellyfishOrderTransfer,

@@ -9,6 +9,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
 class OrderVatIdJellyfishOrderExpanderPostMapPlugin extends AbstractPlugin implements JellyfishOrderExpanderPostMapPluginInterface
 {

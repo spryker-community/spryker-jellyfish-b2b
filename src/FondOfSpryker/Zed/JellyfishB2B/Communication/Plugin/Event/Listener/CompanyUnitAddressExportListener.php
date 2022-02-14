@@ -17,7 +17,7 @@ class CompanyUnitAddressExportListener extends AbstractPlugin implements EventBu
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      * @param string $eventName
      *
      * @return void

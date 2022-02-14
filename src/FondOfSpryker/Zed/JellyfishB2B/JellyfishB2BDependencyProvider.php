@@ -5,9 +5,7 @@ namespace FondOfSpryker\Zed\JellyfishB2B;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeBridge;
-use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeBridge;
-use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCustomerFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Service\JellyfishB2BToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -15,18 +13,40 @@ use Spryker\Zed\Kernel\Container;
 
 class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
-    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
-    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER_REFERENCE = 'FACADE_COMPANY_USER_REFERENCE';
+
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_EXPORT_VALIDATOR = 'PLUGINS_EXPORT_VALIDATOR';
-    public const PLUGINS_COMPANY_USER_EXPORTER_COMPANY_USER_EXPANDER = 'PLUGINS_COMPANY_USER_EXPORTER_COMPANY_USER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,14 +59,10 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyUnitAddressFacade($container);
-        $container = $this->addCustomerFacade($container);
-        $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyUserReferenceFacade($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addExportValidatorPlugins($container);
-        $container = $this->addCompanyUserExporterCompanyUserExpanderPlugins($container);
 
-        return $container;
+        return $this->addExportValidatorPlugins($container);
     }
 
     /**
@@ -58,7 +74,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new JellyfishB2BToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         };
 
@@ -74,7 +90,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY] = function (Container $container) {
             return new JellyfishB2BToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         };
 
@@ -90,7 +106,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
             return new JellyfishB2BToCompanyBusinessUnitFacadeBridge(
-                $container->getLocator()->companyBusinessUnit()->facade()
+                $container->getLocator()->companyBusinessUnit()->facade(),
             );
         };
 
@@ -106,39 +122,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY_UNIT_ADDRESS] = function (Container $container) {
             return new JellyfishB2BToCompanyUnitAddressFacadeBridge(
-                $container->getLocator()->companyUnitAddress()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCustomerFacade(Container $container): Container
-    {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
-            return new JellyfishB2BToCustomerFacadeBridge(
-                $container->getLocator()->customer()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyUserFacade(Container $container): Container
-    {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
-            return new JellyfishB2BToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUnitAddress()->facade(),
             );
         };
 
@@ -154,7 +138,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY_USER_REFERENCE] = function (Container $container) {
             return new JellyfishB2BToCompanyUserReferenceFacadeBridge(
-                $container->getLocator()->companyUserReference()->facade()
+                $container->getLocator()->companyUserReference()->facade(),
             );
         };
 
@@ -170,7 +154,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new JellyfishB2BToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         };
 
@@ -192,31 +176,9 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyUserExporterCompanyUserExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_COMPANY_USER_EXPORTER_COMPANY_USER_EXPANDER] = function (Container $container) {
-            return $this->getCompanyUserExporterCompanyUserExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
+     * @return array<\FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface>
      */
     protected function getExportValidatorPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\CompanyUserExpanderPluginInterface[]
-     */
-    protected function getCompanyUserExporterCompanyUserExpanderPlugins(): array
     {
         return [];
     }

@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper;
 
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyTransfer;
@@ -18,7 +17,7 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface $localeFacade
      */
-    public function __construct( JellyfishB2BToLocaleFacadeInterface $localeFacade)
+    public function __construct(JellyfishB2BToLocaleFacadeInterface $localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }

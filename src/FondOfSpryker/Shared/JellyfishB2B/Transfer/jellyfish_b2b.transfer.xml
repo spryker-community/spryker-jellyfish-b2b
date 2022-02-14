@@ -5,6 +5,24 @@
 
     <transfer name="EventEntity">
         <property name="transferData" type="array"/>
+        <property name="name" type="string"/>
+        <property name="id" type="int"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
+        <property name="modifiedColumns" type="string[]" singular="modifiedColumn"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="fullyImportedAt" type="string"/>
+        <property name="blockedFor" type="string"/>
+        <property name="fkLocale" type="int"/>
+        <property name="externalReference" type="string"/>
+        <property name="priceList" type="PriceList"/>
+        <property name="debtorNumber" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="externalReference" type="string"/>
+        <property name="defaultShippingAddress" type="int"/>
     </transfer>
 
     <transfer name="CompanyUnitAddress">
@@ -12,10 +30,19 @@
         <property name="isDefault" type="bool"/>
         <property name="fax" type="string"/>
         <property name="gln" type="string"/>
+        <property name="importedAt" type="string"/>
+        <property name="name1" type="string"/>
+        <property name="name2" type="string"/>
+        <property name="externalReference" type="string"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="externalReference" type="string"/>
+    </transfer>
+
+    <transfer name="PriceList">
+        <property name="idPriceList" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="JellyfishCompanyBusinessUnit">

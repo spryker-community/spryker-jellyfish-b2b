@@ -36,7 +36,6 @@ class JellyfishCompanyUnitAddressMapper implements JellyfishCompanyUnitAddressMa
             ->setCompanyBusinessUnits($companyUnitAddressTransfer->getCompanyBusinessUnits())
             ->setVatId($companyUnitAddressTransfer->getVatId());
 
-
         return $jellyfishCompanyUnitAddressTransfer;
     }
 }

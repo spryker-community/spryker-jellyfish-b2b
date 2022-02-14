@@ -8,6 +8,9 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CompanyBusinessUnitAdapter extends AbstractAdapter
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNITS_URI = 'standard/company-business-units';
 
     /**

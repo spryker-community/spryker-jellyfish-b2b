@@ -17,7 +17,7 @@ class CompanyExportListener extends AbstractPlugin implements EventBulkHandlerIn
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      * @param string $eventName
      *
      * @return void

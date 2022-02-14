@@ -119,7 +119,7 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
         JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer
     ): JellyfishCompanyBusinessUnitTransfer {
         $companyBusinessUnitTransfer = $this->companyBusinessUnitFacade->findDefaultBusinessUnitByCompanyId(
-            $jellyfishCompanyBusinessUnitTransfer->getCompany()->getId()
+            $jellyfishCompanyBusinessUnitTransfer->getCompany()->getId(),
         );
 
         if ($companyBusinessUnitTransfer === null) {

@@ -8,6 +8,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacade
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\LoggerTrait;
 
@@ -26,7 +27,7 @@ class CompanyExporter implements ExporterInterface
     protected $jellyfishCompanyBusinessUnitMapper;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface[]
+     * @var array<\FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface>
      */
     protected $jellyfishCompanyBusinessUnitExpanderPlugins;
 
@@ -36,16 +37,16 @@ class CompanyExporter implements ExporterInterface
     protected $adapter;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[]
+     * @var array<\FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface>
      */
     protected $validatorPlugins;
 
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface $companyFacade
      * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface[] $jellyfishCompanyBusinessUnitExpanderPlugins
+     * @param array<\FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface> $jellyfishCompanyBusinessUnitExpanderPlugins
      * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
-     * @param \FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface[] $validatorPlugins
+     * @param array<\FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface> $validatorPlugins
      */
     public function __construct(
         JellyfishB2BToCompanyFacadeInterface $companyFacade,
@@ -62,7 +63,7 @@ class CompanyExporter implements ExporterInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *
      * @return void
      */
@@ -116,6 +117,7 @@ class CompanyExporter implements ExporterInterface
     {
         return $transfer instanceof EventEntityTransfer &&
             count($transfer->getModifiedColumns()) > 0 &&
+            in_array(SpyCompanyTableMap::COL_FULLY_IMPORTED_AT, $transfer->getModifiedColumns(), true) &&
             $transfer->getName() === 'spy_company' &&
             $this->validateExport($transfer);
     }

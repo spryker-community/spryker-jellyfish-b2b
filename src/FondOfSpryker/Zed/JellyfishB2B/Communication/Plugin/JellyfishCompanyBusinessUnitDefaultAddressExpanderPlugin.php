@@ -42,14 +42,14 @@ class JellyfishCompanyBusinessUnitDefaultAddressExpanderPlugin extends AbstractP
         }
 
         $companyBusinessUnitTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitById(
-            (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId())
+            (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId()),
         );
 
         foreach ($jellyfishCompanyBusinessUnitTransfer->getAddresses() as $jellyfishCompanyUnitAddressTransfer) {
             if (
                 $this->isDefaultShippingAddress(
                     $companyBusinessUnitTransfer,
-                    $jellyfishCompanyUnitAddressTransfer
+                    $jellyfishCompanyUnitAddressTransfer,
                 ) === false
             ) {
                 $jellyfishCompanyUnitAddressTransfer->setIsDefault(false);

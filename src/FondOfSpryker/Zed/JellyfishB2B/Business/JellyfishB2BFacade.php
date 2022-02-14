@@ -70,7 +70,7 @@ class JellyfishB2BFacade extends AbstractFacade implements JellyfishB2BFacadeInt
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *
      * @return void
      */
@@ -80,27 +80,7 @@ class JellyfishB2BFacade extends AbstractFacade implements JellyfishB2BFacadeInt
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
-     *
-     * @return void
-     */
-    public function exportCompanyUserBulk(array $transfers): void
-    {
-        $this->getFactory()->createCompanyUserExporter()->exportBulk($transfers);
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
-     *
-     * @return void
-     */
-    public function exportCompanyBusinessUnitBulk(array $transfers): void
-    {
-        $this->getFactory()->createCompanyBusinessUnitExporter()->exportBulk($transfers);
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *
      * @return void
      */

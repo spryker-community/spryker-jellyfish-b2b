@@ -8,19 +8,33 @@
       "email": "daniel-rose@gmx.de"
     }
   ],
+  "scripts": {
+    "ci": "make ci",
+    "codeception": "make codeception",
+    "phpcs": "make phpcs",
+    "phpstan": "make phpstan"
+  },
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "fond-of-oryx/company-unit-address-vat-id": "^1.0",
-    "fond-of-spryker/jellyfish-b2b-extension": "dev-master"
+    "fond-of-spryker/conditional-availability-sales-connector": "dev-master",
+    "fond-of-spryker/jellyfish": "dev-feature/b2b",
+    "fond-of-spryker/jellyfish-extension": "dev-master",
+    "fond-of-spryker/jellyfish-b2b-extension": "dev-master",
+    "fond-of-spryker/company-user-reference": "dev-master",
+    "fond-of-spryker/company-user-sales-connector": "dev-master",
+    "spryker/cart-note": "^1.0.0",
+    "spryker/company": "^1.0.0",
+    "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
+    "spryker/company-unit-address": "^1.0.0",
+    "spryker/event": "^2.0.0",
+    "spryker/locale": "^2.2.0 || ^3.0.0",
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "^0.12",
-    "codeception/codeception": "^2.4",
-    "mikey179/vfsstream": "^1.6",
-    "phpro/grumphp": "^0.14",
-    "sebastian/phpcpd": "^4.0",
-    "php-coveralls/php-coveralls": "^2.1",
-    "fond-of-codeception/spryker": "^1.0"
+    "fond-of-codeception/spryker": "^1.0",
+    "spryker/code-sniffer": "*",
+    "spryker-sdk/phpstan-spryker": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -31,7 +45,14 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "FondOfSpryker\\": "tests/FondOfSpryker/"
+      "FondOfSpryker\\": "tests/FondOfSpryker/",
+      "Generated\\": "src/Generated/",
+      "Orm\\Zed\\": "src/Orm/Zed/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
