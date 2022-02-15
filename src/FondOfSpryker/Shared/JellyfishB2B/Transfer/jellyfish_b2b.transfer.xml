@@ -8,7 +8,7 @@
         <property name="name" type="string"/>
         <property name="id" type="int"/>
         <property name="foreignKeys" type="array" singular="foreignKeys"/>
-        <property name="modifiedColumns" type="string[]" singular="modifiedColumn"/>
+        <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
     </transfer>
 
     <transfer name="Company">
