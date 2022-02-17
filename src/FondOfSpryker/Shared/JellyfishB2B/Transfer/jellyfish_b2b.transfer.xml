@@ -125,6 +125,7 @@
         <property name="companyUuid" type="string"/>
         <property name="companyBusinessUnitId" type="int"/>
         <property name="companyBusinessUnitUuid" type="string"/>
+        <property name="companyLocale" type="string"/>
         <property name="companyUserReference" type="string"/>
         <property name="vatId" type="string"/>
     </transfer>

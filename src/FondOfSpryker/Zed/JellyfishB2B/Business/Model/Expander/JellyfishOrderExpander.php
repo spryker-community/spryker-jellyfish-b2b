@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Expander;
 
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\JellyfishOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -15,11 +16,20 @@ class JellyfishOrderExpander implements JellyfishOrderExpanderInterface
     protected $companyUserReferenceFacade;
 
     /**
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeInterface $companyUserReferenceFacade
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface
      */
-    public function __construct(JellyfishB2BToCompanyUserReferenceFacadeInterface $companyUserReferenceFacade)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUserReferenceFacadeInterface $companyUserReferenceFacade
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(
+        JellyfishB2BToCompanyUserReferenceFacadeInterface $companyUserReferenceFacade,
+        JellyfishB2BToLocaleFacadeInterface $localeFacade
+    ) {
         $this->companyUserReferenceFacade = $companyUserReferenceFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -46,6 +56,11 @@ class JellyfishOrderExpander implements JellyfishOrderExpanderInterface
 
         $jellyfishOrderTransfer = $this->expandWithCompanyFields($jellyfishOrderTransfer, $companyUserTransfer);
         $jellyfishOrderTransfer = $this->expandWithCompanyBusinessUnitFields(
+            $jellyfishOrderTransfer,
+            $companyUserTransfer,
+        );
+
+        $jellyfishOrderTransfer = $this->expandWithCompanyLocale(
             $jellyfishOrderTransfer,
             $companyUserTransfer,
         );
@@ -115,5 +130,25 @@ class JellyfishOrderExpander implements JellyfishOrderExpanderInterface
 
         return $jellyfishOrderTransfer->setCompanyBusinessUnitUuid($companyBusinessUnitTransfer->getUuid())
             ->setCompanyBusinessUnitId($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
+     */
+    protected function expandWithCompanyLocale(
+        JellyfishOrderTransfer $jellyfishOrderTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): JellyfishOrderTransfer {
+        $companyTransfer = $companyUserTransfer->getCompany();
+
+        if ($companyTransfer === null) {
+            return $jellyfishOrderTransfer;
+        }
+
+        return $jellyfishOrderTransfer
+            ->setCompanyLocale($this->localeFacade->getLocaleById($companyTransfer->getFkLocale()));
     }
 }
