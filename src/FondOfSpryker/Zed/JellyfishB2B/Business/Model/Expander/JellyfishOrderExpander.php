@@ -148,7 +148,10 @@ class JellyfishOrderExpander implements JellyfishOrderExpanderInterface
             return $jellyfishOrderTransfer;
         }
 
+        $localTransfer = $this->localeFacade
+            ->getLocaleById($companyTransfer->getFkLocale());
+
         return $jellyfishOrderTransfer
-            ->setCompanyLocale($this->localeFacade->getLocaleById($companyTransfer->getFkLocale()));
+            ->setCompanyLocale($localTransfer->getLocaleName());
     }
 }
