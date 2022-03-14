@@ -1,8 +1,8 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper;
+namespace FondOfSpryker\Zed\JellyfishB2B\Business\Mapper;
 
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Checker\CompanyUnitAddressCheckerInterface;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
@@ -11,24 +11,24 @@ use Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer;
 class JellyfishCompanyBusinessUnitMapper implements JellyfishCompanyBusinessUnitMapperInterface
 {
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyMapperInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyMapperInterface
      */
     protected $jellyfishCompanyMapper;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapperInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyUnitAddressMapperInterface
      */
     protected $jellyfishCompanyUnitAddressMapper;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Checker\CompanyUnitAddressCheckerInterface
      */
     protected $companyUnitAddressChecker;
 
     /**
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyMapperInterface $jellyfishCompanyMapper
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapperInterface $jellyfishCompanyUnitAddressMapper
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface $companyUnitAddressChecker
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyMapperInterface $jellyfishCompanyMapper
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyUnitAddressMapperInterface $jellyfishCompanyUnitAddressMapper
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Checker\CompanyUnitAddressCheckerInterface $companyUnitAddressChecker
      */
     public function __construct(
         JellyfishCompanyMapperInterface $jellyfishCompanyMapper,
@@ -48,11 +48,9 @@ class JellyfishCompanyBusinessUnitMapper implements JellyfishCompanyBusinessUnit
     public function fromCompany(CompanyTransfer $companyTransfer): JellyfishCompanyBusinessUnitTransfer
     {
         $jellyfishCompany = $this->jellyfishCompanyMapper->fromCompany($companyTransfer);
-        $jellyfishCompanyBusinessUnitTransfer = new JellyfishCompanyBusinessUnitTransfer();
 
-        $jellyfishCompanyBusinessUnitTransfer->setCompany($jellyfishCompany);
-
-        return $jellyfishCompanyBusinessUnitTransfer;
+        return (new JellyfishCompanyBusinessUnitTransfer())
+            ->setCompany($jellyfishCompany);
     }
 
     /**
@@ -63,15 +61,10 @@ class JellyfishCompanyBusinessUnitMapper implements JellyfishCompanyBusinessUnit
     public function fromCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): JellyfishCompanyBusinessUnitTransfer {
-        $jellyfishCompanyBusinessUnitTransfer = new JellyfishCompanyBusinessUnitTransfer();
+        $jellyfishCompanyBusinessUnitTransfer = (new JellyfishCompanyBusinessUnitTransfer())
+            ->fromArray($companyBusinessUnitTransfer->toArray(), true);
 
-        $jellyfishCompanyBusinessUnitTransfer->setId($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
-            ->setUuid($companyBusinessUnitTransfer->getUuid())
-            ->setExternalReference($companyBusinessUnitTransfer->getExternalReference())
-            ->setName($companyBusinessUnitTransfer->getName())
-            ->setEmail($companyBusinessUnitTransfer->getEmail());
-
-        return $jellyfishCompanyBusinessUnitTransfer;
+        return $jellyfishCompanyBusinessUnitTransfer->setId($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
     }
 
     /**
@@ -82,7 +75,9 @@ class JellyfishCompanyBusinessUnitMapper implements JellyfishCompanyBusinessUnit
     public function fromCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): JellyfishCompanyBusinessUnitTransfer {
-        $jellyfishCompanyUnitAddressTransfer = $this->jellyfishCompanyUnitAddressMapper->fromCompanyUnitAddress($companyUnitAddressTransfer);
+        $jellyfishCompanyUnitAddressTransfer = $this->jellyfishCompanyUnitAddressMapper->fromCompanyUnitAddress(
+            $companyUnitAddressTransfer,
+        );
 
         $jellyfishCompanyBusinessUnitTransfer = new JellyfishCompanyBusinessUnitTransfer();
 
@@ -90,8 +85,6 @@ class JellyfishCompanyBusinessUnitMapper implements JellyfishCompanyBusinessUnit
             return $jellyfishCompanyBusinessUnitTransfer->setBillingAddress($jellyfishCompanyUnitAddressTransfer);
         }
 
-        $jellyfishCompanyBusinessUnitTransfer->addAddress($jellyfishCompanyUnitAddressTransfer);
-
-        return $jellyfishCompanyBusinessUnitTransfer;
+        return $jellyfishCompanyBusinessUnitTransfer->addAddress($jellyfishCompanyUnitAddressTransfer);
     }
 }

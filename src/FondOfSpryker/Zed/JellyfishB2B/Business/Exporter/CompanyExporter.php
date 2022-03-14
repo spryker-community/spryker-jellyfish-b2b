@@ -1,28 +1,25 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter;
+namespace FondOfSpryker\Zed\JellyfishB2B\Business\Exporter;
 
-use FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapterInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Shared\Log\LoggerTrait;
 
 class CompanyExporter implements ExporterInterface
 {
-    use LoggerTrait;
-
     /**
      * @var \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface
      */
     protected $companyFacade;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface
      */
     protected $jellyfishCompanyBusinessUnitMapper;
 
@@ -32,7 +29,7 @@ class CompanyExporter implements ExporterInterface
     protected $jellyfishCompanyBusinessUnitExpanderPlugins;
 
     /**
-     * @var \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapterInterface
      */
     protected $adapter;
 
@@ -43,16 +40,16 @@ class CompanyExporter implements ExporterInterface
 
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface $companyFacade
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      * @param array<\FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface> $jellyfishCompanyBusinessUnitExpanderPlugins
-     * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapterInterface $adapter
      * @param array<\FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface> $validatorPlugins
      */
     public function __construct(
         JellyfishB2BToCompanyFacadeInterface $companyFacade,
         JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper,
         array $jellyfishCompanyBusinessUnitExpanderPlugins,
-        AdapterInterface $adapter,
+        CompanyBusinessUnitAdapterInterface $adapter,
         array $validatorPlugins
     ) {
         $this->companyFacade = $companyFacade;

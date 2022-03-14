@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper;
+namespace FondOfSpryker\Zed\JellyfishB2B\Business\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;

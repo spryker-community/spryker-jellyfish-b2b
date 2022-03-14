@@ -16,8 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class JellyfishB2BEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * @api
-     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface

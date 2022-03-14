@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker;
+namespace FondOfSpryker\Zed\JellyfishB2B\Business\Checker;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 

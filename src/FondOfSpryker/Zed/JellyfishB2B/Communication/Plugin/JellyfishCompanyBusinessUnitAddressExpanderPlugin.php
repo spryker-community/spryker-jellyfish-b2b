@@ -2,8 +2,8 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin;
 
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapperInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Checker\CompanyUnitAddressCheckerInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyUnitAddressMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
@@ -23,19 +23,19 @@ class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin i
     protected $companyUnitAddressFacade;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapperInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyUnitAddressMapperInterface
      */
     protected $jellyfishCompanyUnitAddressMapper;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Checker\CompanyUnitAddressCheckerInterface
      */
     protected $companyUnitAddressChecker;
 
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyUnitAddressMapperInterface $jellyfishCompanyUnitAddressMapper
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Checker\CompanyUnitAddressCheckerInterface $companyUnitAddressChecker
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyUnitAddressMapperInterface $jellyfishCompanyUnitAddressMapper
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Checker\CompanyUnitAddressCheckerInterface $companyUnitAddressChecker
      */
     public function __construct(
         JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade,
@@ -59,9 +59,8 @@ class JellyfishCompanyBusinessUnitAddressExpanderPlugin extends AbstractPlugin i
             return $jellyfishCompanyBusinessUnitTransfer;
         }
 
-        $companyUnitAddressCriteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
-
-        $companyUnitAddressCriteriaFilterTransfer->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId());
+        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->setIdCompanyBusinessUnit($jellyfishCompanyBusinessUnitTransfer->getId());
 
         $companyUnitAddressCollectionTransfer = $this->companyUnitAddressFacade
             ->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);

@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin;
 
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyMapperInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -21,13 +21,13 @@ class JellyfishCompanyBusinessUnitCompanyExpanderPlugin extends AbstractPlugin i
     protected $companyBusinessUnitFacade;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyMapperInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyMapperInterface
      */
     protected $jellyfishCompanyMapper;
 
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyMapperInterface $jellyfishCompanyMapper
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyMapperInterface $jellyfishCompanyMapper
      */
     public function __construct(
         JellyfishB2BToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,

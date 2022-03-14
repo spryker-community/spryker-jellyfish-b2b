@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper;
+namespace FondOfSpryker\Zed\JellyfishB2B\Business\Mapper;
 
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use Generated\Shared\Transfer\CompanyTransfer;
@@ -29,19 +29,12 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
      */
     public function fromCompany(CompanyTransfer $companyTransfer): JellyfishCompanyTransfer
     {
-        $jellyfishCompany = new JellyfishCompanyTransfer();
-        $jellyfishCompany->setId($companyTransfer->getIdCompany())
-            ->setUuid($companyTransfer->getUuid())
-            ->setExternalReference($companyTransfer->getExternalReference())
-            ->setName($companyTransfer->getName())
-            ->setPriceList($this->mapCompanyToPriceList($companyTransfer))
-            ->setDebtorNumber($companyTransfer->getDebtorNumber())
-            ->setBlockedFor($companyTransfer->getBlockedFor())
-            ->setStatus($companyTransfer->getStatus())
-            ->setIsActive($companyTransfer->getIsActive())
-            ->setLocale($this->mapCompanyToLocale($companyTransfer));
+        $jellyfishCompany = (new JellyfishCompanyTransfer())
+            ->fromArray($companyTransfer->toArray(), true);
 
-        return $jellyfishCompany;
+        return $jellyfishCompany->setId($companyTransfer->getIdCompany())
+            ->setPriceList($this->mapCompanyToPriceList($companyTransfer))
+            ->setLocale($this->mapCompanyToLocale($companyTransfer));
     }
 
     /**
@@ -51,18 +44,13 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
      */
     protected function mapCompanyToPriceList(CompanyTransfer $companyTransfer): ?JellyfishPriceListTransfer
     {
-        $jellyfishPriceList = new JellyfishPriceListTransfer();
-
         $priceList = $companyTransfer->getPriceList();
 
         if ($priceList === null) {
             return null;
         }
 
-        $jellyfishPriceList->setIdPriceList($priceList->getIdPriceList())
-            ->setName($priceList->getName());
-
-        return $jellyfishPriceList;
+        return (new JellyfishPriceListTransfer())->fromArray($priceList->toArray(), true);
     }
 
     /**

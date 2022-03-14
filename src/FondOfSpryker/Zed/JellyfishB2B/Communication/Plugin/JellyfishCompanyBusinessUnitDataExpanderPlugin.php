@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin;
 
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
@@ -13,9 +13,6 @@ use Generated\Shared\Transfer\JellyfishCompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * Class JellyfishCompanyBusinessUnitDataExpanderPlugin
- *
- * @package FondOfSpryker\Zed\Jellyfish\Dependency\Plugin
  * @method \FondOfSpryker\Zed\JellyfishB2B\Business\JellyfishB2BFacadeInterface getFacade()
  * @method \FondOfSpryker\Zed\JellyfishB2B\JellyfishB2BConfig getConfig()
  */
@@ -32,14 +29,14 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
     protected $companyUnitAddressFacade;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface
      */
     protected $jellyfishCompanyBusinessUnitMapper;
 
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      */
     public function __construct(
         JellyfishB2BToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
@@ -141,9 +138,7 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
     ): JellyfishCompanyBusinessUnitTransfer {
         $temp = $this->jellyfishCompanyBusinessUnitMapper->fromCompanyBusinessUnit($companyBusinessUnitTransfer);
 
-        $jellyfishCompanyBusinessUnitTransfer->fromArray($temp->modifiedToArray(), true);
-
-        return $jellyfishCompanyBusinessUnitTransfer;
+        return $jellyfishCompanyBusinessUnitTransfer->fromArray($temp->modifiedToArray(), true);
     }
 
     /**
@@ -156,10 +151,12 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
         JellyfishCompanyBusinessUnitTransfer $jellyfishCompanyBusinessUnitTransfer,
         int $idCompanyUnitAddress
     ): JellyfishCompanyBusinessUnitTransfer {
-        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
+        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())
+            ->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
-        $companyUnitAddressTransfer = $this->companyUnitAddressFacade->getCompanyUnitAddressById($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer = $this->companyUnitAddressFacade->getCompanyUnitAddressById(
+            $companyUnitAddressTransfer,
+        );
 
         $companyBusinessUnitCollectionTransfer = $companyUnitAddressTransfer->getCompanyBusinessUnits();
 

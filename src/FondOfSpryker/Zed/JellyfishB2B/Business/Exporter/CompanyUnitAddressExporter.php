@@ -1,21 +1,18 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter;
+namespace FondOfSpryker\Zed\JellyfishB2B\Business\Exporter;
 
-use FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface;
-use FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapterInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyBusinessUnitTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Shared\Log\LoggerTrait;
 
 class CompanyUnitAddressExporter implements ExporterInterface
 {
-    use LoggerTrait;
-
     /**
      * @var string
      */
@@ -32,12 +29,12 @@ class CompanyUnitAddressExporter implements ExporterInterface
     protected $jellyfishCompanyBusinessUnitExpanderPlugins;
 
     /**
-     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface
      */
     protected $jellyfishCompanyBusinessUnitMapper;
 
     /**
-     * @var \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapterInterface
      */
     protected $adapter;
 
@@ -48,16 +45,16 @@ class CompanyUnitAddressExporter implements ExporterInterface
 
     /**
      * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Model\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Mapper\JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper
      * @param array<\FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface> $jellyfishCompanyBusinessUnitExpanderPlugins
-     * @param \FondOfSpryker\Zed\Jellyfish\Business\Api\Adapter\AdapterInterface $adapter
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Business\Api\Adapter\CompanyBusinessUnitAdapterInterface $adapter
      * @param array<\FondOfSpryker\Zed\JellyfishB2BExtension\Dependency\Plugin\EventEntityTransferExportValidatorPluginInterface> $validatorPlugins
      */
     public function __construct(
         JellyfishB2BToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade,
         JellyfishCompanyBusinessUnitMapperInterface $jellyfishCompanyBusinessUnitMapper,
         array $jellyfishCompanyBusinessUnitExpanderPlugins,
-        AdapterInterface $adapter,
+        CompanyBusinessUnitAdapterInterface $adapter,
         array $validatorPlugins
     ) {
         $this->jellyfishCompanyBusinessUnitExpanderPlugins = $jellyfishCompanyBusinessUnitExpanderPlugins;
@@ -177,16 +174,14 @@ class CompanyUnitAddressExporter implements ExporterInterface
     protected function mapCompanyUnitAddressTransferToEventEntityTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): EventEntityTransfer {
-        $eventEntityTransfer = new EventEntityTransfer();
-        $eventEntityTransfer->setName(self::EVENT_ENTITY_TRANSFER_NAME)
+        return (new EventEntityTransfer())
+            ->setName(self::EVENT_ENTITY_TRANSFER_NAME)
             ->setForeignKeys(
                 [
                     sprintf('%s.fk_company', self::EVENT_ENTITY_TRANSFER_NAME) =>
                         $companyUnitAddressTransfer->getFkCompany(),
                 ],
             );
-
-        return $eventEntityTransfer;
     }
 
     /**

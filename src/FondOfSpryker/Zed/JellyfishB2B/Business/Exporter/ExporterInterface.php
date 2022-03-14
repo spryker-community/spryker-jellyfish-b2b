@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\JellyfishB2B\Business\Model\Exporter;
+namespace FondOfSpryker\Zed\JellyfishB2B\Business\Exporter;
 
 interface ExporterInterface
 {

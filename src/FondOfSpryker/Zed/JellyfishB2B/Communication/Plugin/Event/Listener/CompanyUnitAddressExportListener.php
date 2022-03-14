@@ -13,10 +13,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyUnitAddressExportListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      * @param string $eventName
      *

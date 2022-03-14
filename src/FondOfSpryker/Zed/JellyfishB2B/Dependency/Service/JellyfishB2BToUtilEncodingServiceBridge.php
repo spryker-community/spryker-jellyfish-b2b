@@ -2,9 +2,9 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Dependency\Service;
 
-use FondOfSpryker\Zed\Jellyfish\Dependency\Service\JellyfishToUtilEncodingServiceInterface;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 
-class JellyfishB2BToUtilEncodingServiceBridge implements JellyfishToUtilEncodingServiceInterface
+class JellyfishB2BToUtilEncodingServiceBridge implements JellyfishB2BToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
@@ -14,19 +14,19 @@ class JellyfishB2BToUtilEncodingServiceBridge implements JellyfishToUtilEncoding
     /**
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct($utilEncodingService)
+    public function __construct(UtilEncodingServiceInterface $utilEncodingService)
     {
         $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
-     * @param mixed $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null): ?string
+    public function encodeJson(array $value, ?int $options = null, ?int $depth = null): ?string
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
@@ -39,7 +39,7 @@ class JellyfishB2BToUtilEncodingServiceBridge implements JellyfishToUtilEncoding
      *
      * @return mixed|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }

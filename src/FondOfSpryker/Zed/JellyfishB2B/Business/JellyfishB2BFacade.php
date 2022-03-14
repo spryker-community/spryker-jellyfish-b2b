@@ -2,8 +2,6 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Business;
 
-use Generated\Shared\Transfer\JellyfishOrderTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -11,64 +9,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class JellyfishB2BFacade extends AbstractFacade implements JellyfishB2BFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
-     *
-     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
-     */
-    public function expandJellyfishOrder(
-        JellyfishOrderTransfer $jellyfishOrderTransfer,
-        SpySalesOrder $spySalesOrder
-    ): JellyfishOrderTransfer {
-        return $this->getFactory()->createJellyfishOrderExpander()->expand($jellyfishOrderTransfer, $spySalesOrder);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
-     *
-     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
-     */
-    public function expandJellyfishOrderWithOrderComment(
-        JellyfishOrderTransfer $jellyfishOrderTransfer,
-        SpySalesOrder $spySalesOrder
-    ): JellyfishOrderTransfer {
-        return $this->getFactory()
-            ->createOrderCommentJellyfishOrderExpander()
-            ->expand($jellyfishOrderTransfer, $spySalesOrder);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
-     *
-     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
-     */
-    public function expandJellyfishOrderWithOrderCustomReference(
-        JellyfishOrderTransfer $jellyfishOrderTransfer,
-        SpySalesOrder $spySalesOrder
-    ): JellyfishOrderTransfer {
-        return $this->getFactory()
-            ->createOrderCustomReferenceJellyfishOrderExpander()
-            ->expand($jellyfishOrderTransfer, $spySalesOrder);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\JellyfishOrderTransfer $jellyfishOrderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
-     *
-     * @return \Generated\Shared\Transfer\JellyfishOrderTransfer
-     */
-    public function expandJellyfishOrderWithVatId(
-        JellyfishOrderTransfer $jellyfishOrderTransfer,
-        SpySalesOrder $spySalesOrder
-    ): JellyfishOrderTransfer {
-        return $this->getFactory()
-            ->createOrderVatIdJellyfishOrderExpander()
-            ->expand($jellyfishOrderTransfer, $spySalesOrder);
-    }
-
     /**
      * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *

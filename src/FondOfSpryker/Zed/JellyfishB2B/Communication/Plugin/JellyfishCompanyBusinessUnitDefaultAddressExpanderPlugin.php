@@ -73,6 +73,6 @@ class JellyfishCompanyBusinessUnitDefaultAddressExpanderPlugin extends AbstractP
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         JellyfishCompanyUnitAddressTransfer $jellyfishCompanyUnitAddressTransfer
     ): bool {
-        return ($companyBusinessUnitTransfer->getDefaultShippingAddress() === $jellyfishCompanyUnitAddressTransfer->getId());
+        return $companyBusinessUnitTransfer->getDefaultShippingAddress() === $jellyfishCompanyUnitAddressTransfer->getId();
     }
 }
