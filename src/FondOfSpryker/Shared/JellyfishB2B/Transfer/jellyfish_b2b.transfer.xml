@@ -16,6 +16,7 @@
         <property name="fullyImportedAt" type="string"/>
         <property name="blockedFor" type="string"/>
         <property name="fkLocale" type="int"/>
+        <property name="fkCurrency" type="int"/>
         <property name="externalReference" type="string"/>
         <property name="priceList" type="PriceList"/>
         <property name="debtorNumber" type="string"/>
@@ -77,6 +78,7 @@
         <property name="isActive" type="bool"/>
         <property name="priceList" type="JellyfishPriceList"/>
         <property name="locale" type="string"/>
+        <property name="currency" type="string"/>
     </transfer>
 
     <transfer name="JellyfishPriceList">

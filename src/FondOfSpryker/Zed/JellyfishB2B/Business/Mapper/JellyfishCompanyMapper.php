@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\JellyfishB2B\Business\Mapper;
 
+use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCurrencyFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\JellyfishCompanyTransfer;
@@ -15,11 +16,20 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
     protected $localeFacade;
 
     /**
-     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface $localeFacade
+     * @var \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCurrencyFacadeInterface
      */
-    public function __construct(JellyfishB2BToLocaleFacadeInterface $localeFacade)
-    {
+    protected $currencyFacade;
+
+    /**
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface $localeFacade
+     * @param \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCurrencyFacadeInterface $currencyFacade
+     */
+    public function __construct(
+        JellyfishB2BToLocaleFacadeInterface $localeFacade,
+        JellyfishB2BToCurrencyFacadeInterface $currencyFacade
+    ) {
         $this->localeFacade = $localeFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -34,7 +44,8 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
 
         return $jellyfishCompany->setId($companyTransfer->getIdCompany())
             ->setPriceList($this->mapCompanyToPriceList($companyTransfer))
-            ->setLocale($this->mapCompanyToLocale($companyTransfer));
+            ->setLocale($this->mapCompanyToLocale($companyTransfer))
+            ->setCurrency($this->mapCompanyToCurrency($companyTransfer));
     }
 
     /**
@@ -65,5 +76,19 @@ class JellyfishCompanyMapper implements JellyfishCompanyMapperInterface
         return $this->localeFacade
             ->getLocaleById($companyTransfer->getFkLocale())
             ->getLocaleName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return string
+     */
+    protected function mapCompanyToCurrency(CompanyTransfer $companyTransfer): string
+    {
+        $companyTransfer->requireFkCurrency();
+
+        return $this->currencyFacade
+            ->getByIdCurrency($companyTransfer->getFkCurrency())
+            ->getCode();
     }
 }

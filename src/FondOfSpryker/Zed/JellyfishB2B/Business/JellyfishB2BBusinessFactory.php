@@ -23,6 +23,7 @@ use FondOfSpryker\Zed\JellyfishB2B\Communication\Plugin\JellyfishCompanyBusiness
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeInterface;
+use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCurrencyFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Plugin\JellyfishCompanyBusinessUnitExpanderPluginInterface;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Service\JellyfishB2BToUtilEncodingServiceInterface;
@@ -84,7 +85,10 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCompanyMapper(): JellyfishCompanyMapperInterface
     {
-        return new JellyfishCompanyMapper($this->getLocaleFacade());
+        return new JellyfishCompanyMapper(
+            $this->getLocaleFacade(),
+            $this->getCurrencyFacade(),
+        );
     }
 
     /**
@@ -228,6 +232,14 @@ class JellyfishB2BBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyUnitAddressFacade(): JellyfishB2BToCompanyUnitAddressFacadeInterface
     {
         return $this->getProvidedDependency(JellyfishB2BDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCurrencyFacadeInterface
+     */
+    protected function getCurrencyFacade(): JellyfishB2BToCurrencyFacadeInterface
+    {
+        return $this->getProvidedDependency(JellyfishB2BDependencyProvider::FACADE_CURRENCY);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\JellyfishB2B;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyBusinessUnitFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCompanyUnitAddressFacadeBridge;
+use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToCurrencyFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Facade\JellyfishB2BToLocaleFacadeBridge;
 use FondOfSpryker\Zed\JellyfishB2B\Dependency\Service\JellyfishB2BToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -26,6 +27,11 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
+
+    /**
+     * @var string
+     */
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
 
     /**
      * @var string
@@ -53,6 +59,7 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyUnitAddressFacade($container);
+        $container = $this->addCurrencyFacade($container);
         $container = $this->addLocaleFacade($container);
 
         return $this->addExportValidatorPlugins($container);
@@ -116,6 +123,22 @@ class JellyfishB2BDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_COMPANY_UNIT_ADDRESS] = static function (Container $container) {
             return new JellyfishB2BToCompanyUnitAddressFacadeBridge(
                 $container->getLocator()->companyUnitAddress()->facade(),
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCurrencyFacade(Container $container): Container
+    {
+        $container[static::FACADE_CURRENCY] = static function (Container $container) {
+            return new JellyfishB2BToCurrencyFacadeBridge(
+                $container->getLocator()->currency()->facade(),
             );
         };
 
