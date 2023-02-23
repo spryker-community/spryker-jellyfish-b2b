@@ -68,7 +68,7 @@ class JellyfishCompanyBusinessUnitDataExpanderPlugin extends AbstractPlugin impl
             return $this->expandByBillingAddress($jellyfishCompanyBusinessUnitTransfer);
         }
 
-        if ($jellyfishCompanyBusinessUnitTransfer->getAddresses() !== null && $jellyfishCompanyBusinessUnitTransfer->getAddresses()->count()) {
+        if ($jellyfishCompanyBusinessUnitTransfer->getAddresses()->count()) {
             return $this->expandByAddress($jellyfishCompanyBusinessUnitTransfer);
         }
 
