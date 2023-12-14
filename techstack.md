@@ -1,28 +1,32 @@
 <!--
---- Readme.md Snippet without images Start ---
+&lt;--- Readme.md Snippet without images Start ---&gt;
 ## Tech Stack
 spryker-community/spryker-jellyfish-b2b is built on the following main stack:
+
 - [PHP](http://www.php.net/) – Languages
 - [GitHub Actions](https://github.com/features/actions) – Continuous Integration
 
 Full tech stack [here](/techstack.md)
---- Readme.md Snippet without images End ---
 
---- Readme.md Snippet with images Start ---
+&lt;--- Readme.md Snippet without images End ---&gt;
+
+&lt;--- Readme.md Snippet with images Start ---&gt;
 ## Tech Stack
 spryker-community/spryker-jellyfish-b2b is built on the following main stack:
+
 - <img width='25' height='25' src='https://img.stackshare.io/service/991/hwUcGZ41_400x400.jpg' alt='PHP'/> [PHP](http://www.php.net/) – Languages
 - <img width='25' height='25' src='https://img.stackshare.io/service/11563/actions.png' alt='GitHub Actions'/> [GitHub Actions](https://github.com/features/actions) – Continuous Integration
 
 Full tech stack [here](/techstack.md)
---- Readme.md Snippet with images End ---
+
+&lt;--- Readme.md Snippet with images End ---&gt;
 -->
 <div align="center">
 
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [spryker-community/spryker-jellyfish-b2b](https://github.com/spryker-community/spryker-jellyfish-b2b)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|3<br/>Tools used|11/09/23 <br/>Report generated|
+|8<br/>Tools used|12/14/23 <br/>Report generated|
 |------|------|
 </div>
 
@@ -60,7 +64,20 @@ Full tech stack [here](/techstack.md)
 </tr>
 </table>
 
+
+## <img src='https://img.stackshare.io/group.svg' /> Open source packages (5)</h2>
+
+## <img width='24' height='24' src='https://img.stackshare.io/package_manager/1778/default_90cb8b66e85ae5b95928b10bb076ab6a27c7e151.png'/> Packagist (5)
+
+|NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
+|:------|:------|:------|:------|:------|:------|
+|[fond-of-codeception/spryker](https://packagist.org/fond-of-codeception/spryker)|v1.0|09/15/22|Daniel Rose |N/A|N/A|
+|[spryker/code-sniffer](https://packagist.org/spryker/code-sniffer)|N/A|09/15/22|Daniel Rose |N/A|N/A|
+|[spryker/event](https://packagist.org/spryker/event)|v2.0.0|09/15/22|Daniel Rose |N/A|N/A|
+|[spryker/locale](https://packagist.org/spryker/locale)|v2.2.0|09/15/22|Daniel Rose |N/A|N/A|
+|[spryker/util-encoding](https://packagist.org/spryker/util-encoding)|v1.0.0|09/15/22|Daniel Rose |N/A|N/A|
+
 <br/>
 <div align='center'>
 
-Generated via [Stack File](https://github.com/apps/stack-file)
+Generated via [Stack File](https://github.com/marketplace/stack-file)
