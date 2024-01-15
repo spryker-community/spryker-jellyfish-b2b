@@ -22,12 +22,12 @@
     "spryker/company-unit-address": "^1.0.0",
     "spryker/event": "^2.0.0",
     "spryker/event-behavior": "^1.0.0",
-    "spryker/locale": "^2.2.0 || ^3.0.0",
-    "spryker/currency": "^3.0.0",
+    "spryker/locale": "^2.2.0 || ^3.0.0 || ^4.0.0",
+    "spryker/currency": "^3.0.0 || ^4.0.0",
     "spryker/util-encoding": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
-    "fond-of-codeception/spryker": "^1.0",
+    "fond-of-codeception/spryker": "*",
     "spryker/code-sniffer": "*",
     "spryker-sdk/phpstan-spryker": "*"
   },
